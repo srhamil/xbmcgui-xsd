@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:kdt="http://kodi.tv/xbmcgui/xsd/kdt"
+xmlns:skin="http://kodi.tv/xbmcgui/xsd/skin"
+xmlns="http://kodi.tv/xbmcgui/xsd/addon"
+xmlns:addon="http://kodi.tv/xbmcgui/xsd/addon"
+targetNamespace="http://kodi.tv/xbmcgui/xsd/skin"
+
+>
+<xsd:import namespace="http://kodi.tv/xbmcgui/xsd/kdt" schemaLocation="types.xsd" />
+<xsd:import namespace="http://kodi.tv/xbmcgui/xsd/addon" schemaLocation="addon.xsd" />
+<xsd:element name="window"  type="skin:windowType"/>
+
+ 
+<xsd:complexType name="windowType"  >
+    <xsd:sequence>
+        <xsd:choice minOccurs="5" maxOccurs="unbounded">
+            <!-- <xsd:element name="view" type="anythingType"/> -->
+            <xsd:element name="controls" type="addon:controlsType"/>
+        </xsd:choice>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="lax" />
+</xsd:complexType>
+
+<xsd:complexType name="controlsType">
+    <xsd:choice maxOccurs="unbounded">
+        <xsd:element name="control" type="controlType"/>
+    </xsd:choice>
+</xsd:complexType>
+
+<xsd:complexType name="groupListControlType" >
+    <xsd:complexContent>
+        <xsd:extension base="controlType">
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                <xsd:element name="itemgap" type="kdt:zeroOrPositiveInt"/>
+                <xsd:element name="orientation" type="kdt:orientationType"/>
+                <xsd:element name="usecontrolcoords" type="kdt:trueFalseType"/>
+                <xsd:element name="align" type="kdt:alignType"/>
+                <xsd:element name="defaultControl" type="kdt:zeroOrPositiveInt"/>
+            </xsd:choice>
+        </xsd:extension>
+    </xsd:complexContent>
+</xsd:complexType>
+
+
+
+<xsd:complexType name="controlType" >
+    <xsd:choice minOccurs="0" maxOccurs="unbounded">
+        <xsd:element name="description" type="xsd:string"/>
+        <xsd:element name="id" type="kdt:idType"/>
+        <xsd:element name="left" type="kdt:zeroOrPositiveInt"/>
+        <xsd:element name="top" type="kdt:zeroOrPositiveInt"/>
+        <xsd:element name="right" type="kdt:zeroOrPositiveInt"/>
+        <xsd:element name="bottom" type="kdt:zeroOrPositiveInt"/>
+        <xsd:element name="width" type="kdt:zeroOrPositiveInt"/>
+        <xsd:element name="height" type="kdt:zeroOrPositiveInt"/>
+        <xsd:element name="centerleft" type="kdt:centeringType"/>
+        <xsd:element name="centerright" type="kdt:centeringType"/>
+        <xsd:element name="centertop" type="kdt:centeringType"/>
+        <xsd:element name="centerbottom" type="kdt:centeringType"/>
+        <xsd:element name="visible" type="kdt:trueFalseType"/>
+        <xsd:element name="animation" type="xsd:string"/>
+        <xsd:element name="camera" type="xsd:string"/>
+        <xsd:element name="depth" type="xsd:string"/>
+        <xsd:element name="colordiffuse" type="kdt:colorType"/>
+    </xsd:choice>
+    <xsd:attribute name="id" type="kdt:idType" use="required"/>
+</xsd:complexType>
+
+
+</xsd:schema> 

@@ -1,0 +1,172 @@
+<?xml version="1.1"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:kdt="http://kodi.tv/xbmcgui/xsd/1.0/kdt"
+    xmlns:skin="http://kodi.tv/xbmcgui/xsd/1.0/skin"
+    xmlns:addon="http://kodi.tv/xbmcgui/xsd/1.0/addon"
+    xmlns="http://kodi.tv/xbmcgui/xsd/1.0/kdt"
+    targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/kdt"
+    >
+
+<xsd:complexType name="anythingType" >
+    <xsd:sequence>
+        <xsd:any minOccurs="0" maxOccurs="unbounded" namespace="##any" processContents="lax"/>
+    </xsd:sequence>
+    <xsd:anyAttribute namespace="##any" processContents="lax" />
+</xsd:complexType>
+
+
+
+
+
+<xsd:simpleType name="depthType">
+    <xsd:restriction base="xsd:float">
+        <xsd:minInclusive value="-1.0"/>
+        <xsd:maxExclusive value="1.0"/>
+    </xsd:restriction>
+
+</xsd:simpleType>
+
+<xsd:simpleType name="controlTypeType" >
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="group"/>
+        <xsd:enumeration value="grouplist"/>
+        <xsd:enumeration value="button"/>
+        <xsd:enumeration value="scrollbar"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="alignType" >
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="left"/>
+        <xsd:enumeration value="right"/>
+        <xsd:enumeration value="center"/>
+        <xsd:enumeration value="justify"/>
+    </xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="orientationType" >
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="horizontal"/>
+        <xsd:enumeration value="vertical"/>
+     </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="colorNameType" >
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="red"/>
+        <xsd:enumeration value="blue"/>
+        <xsd:enumeration value="green"/>
+        <xsd:enumeration value="black"/>
+        <xsd:enumeration value="white"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="hexColorType">
+    <xsd:restriction base="xsd:string">
+        <xsd:pattern value="[0-9a-fA-F]{8}"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="colorType">
+    <xsd:union memberTypes="hexColorType colorNameType"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="fontType">
+    <xsd:restriction base="xsd:Name"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="zeroOrPositiveInt">
+    <xsd:restriction base="xsd:integer">
+        <xsd:minInclusive value="0"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="percentageType">
+    <xsd:restriction base="xsd:string">
+        <xsd:pattern value="1?[0-9]?[0-9]%"></xsd:pattern>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="centeringType">
+    <xsd:union memberTypes="percentageType zeroOrPositiveInt"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="idType">
+    <xsd:restriction base="xsd:integer">
+        <xsd:minInclusive value="0"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="empty">
+    <xsd:restriction base="xsd:string">
+        <xsd:pattern value=""/>
+    </xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="idRefType">
+    <xsd:union  memberTypes="idType empty"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="trueFalseType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="true"/>
+        <xsd:enumeration value="false"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:simpleType name="viewsType" >
+    <xsd:restriction base="kdt:zeroOrPositiveInt"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="viewType" >
+    <xsd:restriction base="kdt:zeroOrPositiveInt"/>
+</xsd:simpleType>
+
+<xsd:simpleType name="pulseType" >
+    <xsd:restriction base="kdt:zeroOrPositiveInt"/>
+</xsd:simpleType>
+
+
+<xsd:simpleType name="imageFilenameType">
+    <xsd:restriction base="xsd:string">
+        <xsd:pattern value="\w+\.(png|jpg|bmp)"/>
+     </xsd:restriction> 
+</xsd:simpleType>
+
+
+<xsd:complexType name="textureFocusType">
+     <xsd:simpleContent >
+        <xsd:extension base="kdt:imageFilenameType">
+            <xsd:attribute name="colordiffuse" type="kdt:colorType"/>
+        </xsd:extension> 
+     </xsd:simpleContent>
+</xsd:complexType>
+
+<xsd:simpleType name="tweenType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="linear"/>
+        <xsd:enumeration value="quadratic"/>
+        <xsd:enumeration value="bounce"/>
+        <xsd:enumeration value="elastic"/>
+        <xsd:enumeration value="cubic"/>
+        <xsd:enumeration value="circle"/>
+        <xsd:enumeration value="sine"/>
+        <xsd:enumeration value="back"/>
+    </xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="easingType">
+    <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="in"/>
+        <xsd:enumeration value="out"/>
+        <xsd:enumeration value="inout"/>
+     </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:complexType name="scrolltimeType">
+     <xsd:simpleContent >
+        <xsd:extension base="kdt:zeroOrPositiveInt">
+            <xsd:attribute name="tween" type="kdt:tweenType"/>
+            <xsd:attribute name="easing" type="kdt:easingType"/>
+        </xsd:extension> 
+     </xsd:simpleContent>
+</xsd:complexType>
+
+</xsd:schema> 
