@@ -34,23 +34,67 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
     <xsd:import namespace="http://kodi.tv/xbmcgui/xsd/1.0/kdt" schemaLocation="file://c:/dev/Kodi/xbmxguid-liquid/xbmcguiXsd/Schemas/1.0/types.xsd" />
 
 
-    <xsd:element  name="param"/>
+    
+    <!-- This type is the base for all control type and defines attributes and
+        elements that are valid for any type of control. -->
+        <xsd:complexType name="basicControlType">
+            <xsd:choice maxOccurs="unbounded">
+               <xsd:group ref="defaultControlTags"/>
+            </xsd:choice>
+           <xsd:attribute name="id" type="idType" />
+           <xsd:attribute name="type" type="controlTypeEnum" use="required"/>
+   </xsd:complexType>
 
+   <!-- This type extends the basicControlType defintion to include common elements for
+    specific instances of schemas. For instance this is there the control type definitions
+    are extended to support includes for skin.xml -->
+   
+    <!-- This type is the base for all control type and defines attributes and
+        elements that are valid for any type of control in a xsd 1.0 or 1.1 skin. -->
     <xsd:complexType name="controlType">
-        <xsd:attribute name="id" type="idType" />
-        <xsd:attribute name="type" type="controlTypeType" use="required"/>
-    </xsd:complexType>
+        <xsd:complexContent>
+            <xsd:extension base="basicControlType">
+                <xsd:sequence >
+                    <xsd:choice maxOccurs="unbounded">
+                        <xsd:element ref="include"/>
+                     </xsd:choice>
+                </xsd:sequence>       
+            </xsd:extension>
+        </xsd:complexContent>
+   </xsd:complexType>
 
-    <!-- control type definitions -->
-    <xsd:complexType name="buttonControlType">
+    <!-- control type definitions. This section contains type definition for the control
+    elements. These are primarily a composite of various element groups.
+    Types here have names based on, and are ordered as found at https://kodi.wiki/view/Controls
+    The tag list defintinos are primarily based on the xbmcgui .dox files found in the
+    Kodi codebase. These can be found in this project in dox directory under the root.
+
+
+    Note that these definitions are designed to be copy-and-pasted between the various flavors
+    of xsd 1.0  / 1.1 and skin.xml / addon.xml
+ -->
+    <xsd:complexType name="groupControlType">
+        <xsd:complexContent>
+            <xsd:extension base="controlType">
+                <xsd:sequence >
+                    <xsd:choice maxOccurs="unbounded">
+                        <!-- <xsd:group ref="defaultControlTags"/> -->
+                     </xsd:choice>
+                </xsd:sequence>       
+            </xsd:extension>
+        </xsd:complexContent>
+     </xsd:complexType>
+
+    <xsd:complexType name="groupListControlType">
         <xsd:sequence >
             <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-                <xsd:group ref="textTags"/>
-                <xsd:group ref="focusableControlTags"/>
-                <xsd:group ref="posTags"/>
-                <xsd:group ref="textureFocusTags"/>
-             </xsd:choice>
+                <xsd:element name="itemgap" type="xsd:int"/>
+                <xsd:element name="orientation" type="orientationType"/>
+                <xsd:element name="usecontrolcoords" type="trueFalseType"/>
+                <xsd:element name="align" type="alignType"/>
+                <xsd:element name="defaultControl" type="zeroOrPositiveInt"/>
+             <xsd:group ref="defaultControlTags"/>
+            </xsd:choice>
         </xsd:sequence>
     </xsd:complexType>
 
@@ -78,7 +122,164 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
             </xsd:choice>
         </xsd:sequence>
     </xsd:complexType>
+
+    <xsd:complexType name="imageControlType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="multiImageControlType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
     
+    <xsd:complexType name="buttonControlType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+                <xsd:group ref="textTags"/>
+                <xsd:group ref="focusableControlTags"/>
+                <xsd:group ref="posTags"/>
+                <xsd:group ref="textureFocusTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="radioButtonControlType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="toggleButtonControlType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="spinControlType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+ 
+    <xsd:complexType name="settingsSpinControlType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+ 
+    <xsd:complexType name="sliderControlType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+ 
+    <xsd:complexType name="scrollBarControlType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+ 
+    <xsd:complexType name="settingsSliderControlType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+ 
+    <xsd:complexType name="progressControlType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="listContainerType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="wrapListContainerType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="fixedListContainerType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="panelType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="textBoxType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="rssTickerType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="visualizationControlType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="videoControlType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+   
 
     <xsd:complexType name="editControlType">
         <xsd:sequence >
@@ -94,6 +295,32 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
             </xsd:choice>
         </xsd:sequence>
     </xsd:complexType>
+
+    
+    <xsd:complexType name="EPGRGridControlType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+   
+    <xsd:complexType name="moverControlType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+  
+    <xsd:complexType name="resizeControlType">
+        <xsd:sequence >
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags"/>
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
 
     <!--  elements that can be used for unit testng of the 
     control types -->
@@ -255,21 +482,6 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
         </xsd:sequence>
     </xsd:complexType>
 
-
-
-    <xsd:complexType name="groupListControlType" >
-        <xsd:complexContent>
-            <xsd:extension base="controlType">
-                <xsd:choice minOccurs="0" maxOccurs="unbounded">
-                    <xsd:element name="itemgap" type="xsd:int"/>
-                    <xsd:element name="orientation" type="orientationType"/>
-                    <xsd:element name="usecontrolcoords" type="trueFalseType"/>
-                    <xsd:element name="align" type="alignType"/>
-                    <xsd:element name="defaultControl" type="zeroOrPositiveInt"/>
-                </xsd:choice>
-            </xsd:extension>
-        </xsd:complexContent>
-    </xsd:complexType>
 
 
     <!--  groups of tags that a commony found together in xbmcgui defs -->
@@ -602,7 +814,7 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
 
     </xsd:simpleType>
 
-    <xsd:simpleType name="controlTypeType" >
+    <xsd:simpleType name="controlTypeEnum" >
         <xsd:restriction base="xsd:string">
             <xsd:enumeration value="group"/>
             <xsd:enumeration value="grouplist"/>
@@ -922,7 +1134,7 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
         </xsd:complexType>
     </xsd:element>
 
-    <xsd:element name="include">
+    <xsd:element name="include" >
         <xsd:complexType mixed="true">
             <xsd:sequence minOccurs="0" maxOccurs="unbounded">
                 <xsd:choice >
@@ -935,6 +1147,18 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
             <xsd:attribute name="condition" type="xsd:string"/>
         </xsd:complexType>
     </xsd:element>
+
+    
+    <xsd:element  name="param">
+        <xsd:complexType mixed="true">
+            <xsd:attribute name="id" type="kdt:idType"/>
+            <xsd:attribute name="name" type="xsd:Name"/>
+            <xsd:attribute name="value" type="xsd:string"/>
+            <xsd:attribute name="default" type="xsd:string"/>
+        </xsd:complexType>
+    </xsd:element>
+
+
 
 
 

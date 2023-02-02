@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <window
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-xsi:schemaLocation="http://kodi.tv/xbmcgui/xsd/1.0/skin /dev/Kodi/xbmxguid-liquid/Schemas/1.0/addon.xsd"
-xmlns="http://kodi.tv/xbmcgui/xsd/1.0/addon" 
-    xmlns:addon="http://kodi.tv/xbmcgui/xsd/1.0/addon"  
+	xsi:schemaLocation="http://kodi.tv/xbmcgui/xsd/1.0/skin ../../xsd/1.0/skin.xsd"
+	xmlns="http://kodi.tv/xbmcgui/xsd/1.0/skin" 
+    xmlns:skin="http://kodi.tv/xbmcgui/xsd/1.0/skin"  
     >
 	<defaultcontrol>9000</defaultcontrol>
 	<backgroundcolor>background</backgroundcolor>
