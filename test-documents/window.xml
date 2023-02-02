@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="addon.xsd"?>
+<!-- coordinate are based on 720i:  1280w 720h-->
+<window 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://kodi.tv/xbmcgui/xsd/1.0/addon /dev/Kodi/xbmxguid-liquid/Schemas/1.0/addon.xsd"
+xmlns="http://kodi.tv/xbmcgui/xsd/1.0/addon" xmlns:addon="http://kodi.tv/xbmcgui/xsd/1.0/addon">
+    <view>45</view>
+    <controls>
+        
+
+        <control type="group" id="10000">
+            <description>tab control container and scrollbar</description>
+            <control type="scrollbar" id="11000">
+                <description>Tab control container list scrollbar</description>
+                <left>250</left>
+                <top>0</top>
+                <width>25</width>
+                <height>200</height>
+                <visible>true</visible>
+                <pulseonselect>false</pulseonselect>
+                <orientation>vertical</orientation>
+                <showonepage>false</showonepage>
+                <ondown>3</ondown>
+                <onleft>12000</onleft>
+                <onleft>12</onleft>
+                <animation effect="slide" end="30,0" time="200">Focus</animation>
+                <animation effect="fade" time="200" delay="200">Hidden</animation>
+                <animation effect="slide" start="-120,0" time="200" condition="Window.Previous(Home)">WindowOpen</animation>
+                <animation  type="Focus" condition="Window.IsActive(Home)" reversible="false">
+                    <effect type="fadediffuse"  />
+                    <effect type="rotatex" />
+                </animation>
+                <animation effect="fadediffuse" start="FFFF0000" end="FF00FF00" time="200" condition="Control.HasFocus(2)" pulse="true">Conditional</animation>
+                        
+            </control>
+            <control type="grouplist" id="12000">
+                <description>tab control container on left edge"</description>
+                <left>0</left>
+                <top>0</top>
+                <itemgap>10</itemgap>
+                <orientation>vertical</orientation>
+                <align>right</align>
+                <usecontrolcoords>false</usecontrolcoords>
+                <width>300</width>
+                <height>200</height>
+                <defaultcontrol>200</defaultcontrol>
+                <visible>true</visible>
+                <colordiffuse>FFFF00FF</colordiffuse>
+                <scrolltime tween="sine" easing="out">200</scrolltime>
+                <pagecontrol>11000</pagecontrol>
+
+
+                <control type="button" id="12100">
+                    <description>My first button control</description>
+                    <label>Tab 1</label>
+                    <onup></onup>
+                    <ondown>12200</ondown>
+                    <onleft></onleft>
+                    <onright>11000</onright>
+                    <visible>true</visible>
+
+                    <width>250</width>
+                    <height>60</height>
+                    <left>0</left>
+                    <top>0</top>
+                    <visible>true</visible>
+                    <colordiffuse>FFFFFFFF</colordiffuse>
+                    <texturefocus colordiffuse="FF1D3E52">white.png</texturefocus>
+                    <texturenofocus colordiffuse="FF000000">white.png</texturenofocus>
+                    <wrapmultiline>true</wrapmultiline>
+                    <font>font14</font>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <focusedcolor>FFFFFFFF</focusedcolor>
+                    <disabledcolor>80FFFFFF</disabledcolor>
+                    <invalidcolor>FFFF4444</invalidcolor>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <pulseonselect>false</pulseonselect>
+                </control>
+                <control type="button" id="12200">
+                    <description>My second button control</description>
+                    <label>Tab 2</label>
+                    <onup>12100</onup>
+                    <ondown>12300</ondown>
+                    <onleft></onleft>
+                    <onright>11000</onright>
+                    <visible>true</visible>
+
+
+                    <width>250</width>
+                    <height>60</height>
+                    <left>0</left>
+                    <top>0</top>
+                    <visible>true</visible>
+                    <colordiffuse>FFFFFFFF</colordiffuse>
+                    <texturefocus colordiffuse="FF1D3E52">white.png</texturefocus>
+                    <texturenofocus colordiffuse="FF000000">white.png</texturenofocus>
+                    <wrapmultiline>true</wrapmultiline>
+                    <font>font14</font>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <focusedcolor>FFFFFFFF</focusedcolor>
+                    <disabledcolor>80FFFFFF</disabledcolor>
+                    <invalidcolor>FFFF4444</invalidcolor>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <pulseonselect>false</pulseonselect>
+                </control>
+                <control type="button" id="12300">
+                    <description>My second button control</description>
+                    <label>Tab 3</label>
+                    <onup>12200</onup>
+                    <ondown>12400</ondown>
+                    <onleft></onleft>
+                    <onright>11000</onright>
+                    <visible>true</visible>
+
+
+                    <width>250</width>
+                    <height>60</height>
+                    <left>0</left>
+                    <top>0</top>
+                    <visible>true</visible>
+                    <colordiffuse>FFFFFFFF</colordiffuse>
+                    <texturefocus colordiffuse="FF1D3E52">white.png</texturefocus>
+                    <texturenofocus colordiffuse="FF000000">white.png</texturenofocus>
+                    <wrapmultiline>true</wrapmultiline>
+                    <font>font14</font>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <focusedcolor>FFFFFFFF</focusedcolor>
+                    <disabledcolor>80FFFFFF</disabledcolor>
+                    <invalidcolor>FFFF4444</invalidcolor>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <pulseonselect>false</pulseonselect>
+                </control>
+                <control type="button" id="12400">
+                    <description>My second button control</description>
+                    <label>Tab 4</label>
+                    <onup>12300</onup>
+                    <ondown>12500</ondown>
+                    <onleft></onleft>
+                    <onright>11000</onright>
+                    <visible>true</visible>
+
+
+                    <width>250</width>
+                    <height>60</height>
+                    <left>0</left>
+                    <top>0</top>
+                    <visible>true</visible>
+                    <colordiffuse>FFFFFFFF</colordiffuse>
+                    <texturefocus colordiffuse="FF1D3E52">white.png</texturefocus>
+                    <texturenofocus colordiffuse="FF000000">white.png</texturenofocus>
+                    <wrapmultiline>true</wrapmultiline>
+                    <font>font14</font>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <focusedcolor>FFFFFFFF</focusedcolor>
+                    <disabledcolor>80FFFFFF</disabledcolor>
+                    <invalidcolor>FFFF4444</invalidcolor>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <pulseonselect>false</pulseonselect>
+                </control>
+                <control type="button" id="12500">
+                    <description>My second button control</description>
+                    <label>Tab 5</label>
+                    <onup>12400</onup>
+                    <ondown></ondown>
+                    <onleft></onleft>
+                    <onright>11000</onright>
+                    <visible>true</visible>
+
+
+                    <width>250</width>
+                    <height>60</height>
+                    <left>0</left>
+                    <top>0</top>
+                    <visible>true</visible>
+                    <colordiffuse>FFFFFFFF</colordiffuse>
+                    <texturefocus colordiffuse="FF1D3E52">white.png</texturefocus>
+                    <texturenofocus colordiffuse="FF000000">white.png</texturenofocus>
+                    <wrapmultiline>true</wrapmultiline>
+                    <font>font14</font>
+                    <textcolor>FFFFFFFF</textcolor>
+                    <focusedcolor>FFFFFFFF</focusedcolor>
+                    <disabledcolor>80FFFFFF</disabledcolor>
+                    <invalidcolor>FFFF4444</invalidcolor>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <pulseonselect>false</pulseonselect>
+                </control>
+            </control>
+        </control>
+    </controls>
+</window>

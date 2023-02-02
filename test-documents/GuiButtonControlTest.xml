@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="addon.xsd"?>
+<!-- coordinate are based on 720i:  1280w 720h-->
+<buttonControlTest 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://kodi.tv/xbmcgui/xsd/1.0/addon /dev/Kodi/xbmxguid-liquid/xbmcguiXsd/Schemas/1.0/skin.xsd"
+xmlns="http://kodi.tv/xbmcgui/xsd/1.0/skin" xmlns:addon="http://kodi.tv/xbmcgui/xsd/1.0/skin">
+    <description>My first button control</description>
+    <posx>80</posx>
+    <posy>60</posy>
+    <width>250</width>
+    <height>200</height>
+    <visible>true</visible>
+    <colordiffuse>FFFFFFFF</colordiffuse>
+    <texturefocus colordiffuse="FFFFAAFF">myfocustexture.png</texturefocus>
+    <texturenofocus colordiffuse="FFFFAAFF">mynormaltexture.png</texturenofocus>
+    <label>29</label>
+    <wrapmultiline>true</wrapmultiline>
+    <font>font12</font>
+    <textcolor>FFFFFFFF</textcolor>
+    <focusedcolor>FFFFFFFF</focusedcolor>
+    <disabledcolor>80FFFFFF</disabledcolor>
+    <invalidcolor>FFFFFFFF</invalidcolor>
+    <align>left</align>
+    <aligny>center</aligny>
+    <textoffsetx>10</textoffsetx>
+    <textoffsety>10</textoffsety>
+    <pulseonselect>false</pulseonselect>
+    <onclick>XBMC.ActivateWindow(MyVideos)</onclick>
+    <onfocus>-</onfocus>
+    <onunfocus>-</onunfocus>
+    <onup>2</onup>
+    <ondown>3</ondown>
+    <onleft>1</onleft>
+    <onright>1</onright>
+</buttonControlTest>

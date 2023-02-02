@@ -1,4 +1,5 @@
-<?xml version="1.1"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Liquid Studio (https://www.liquid-technologies.com) -->
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
     xmlns:kdt="http://kodi.tv/xbmcgui/xsd/1.0/kdt"
     xmlns:skin="http://kodi.tv/xbmcgui/xsd/1.0/skin"
@@ -7,166 +8,421 @@
     targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/kdt"
     >
 
-<xsd:complexType name="anythingType" >
-    <xsd:sequence>
-        <xsd:any minOccurs="0" maxOccurs="unbounded" namespace="##any" processContents="lax"/>
-    </xsd:sequence>
-    <xsd:anyAttribute namespace="##any" processContents="lax" />
-</xsd:complexType>
+
+    <xsd:simpleType name="animationTypeEnum">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="WindowOpen"/>
+            <xsd:enumeration value="WindowClose"/>
+            <xsd:enumeration value="Visible"/>
+            <xsd:enumeration value="Hidden"/>
+            <xsd:enumeration value="Focus"/>
+            <xsd:enumeration value="Unfocus"/>
+            <xsd:enumeration value="Conditional"/>
+            <xsd:enumeration value="VisibleChange"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="effectTypeEnum">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="fade"/>
+            <xsd:enumeration value="fadediffuse"/>
+            <xsd:enumeration value="rotatex"/>
+            <xsd:enumeration value="rotatey"/>
+            <xsd:enumeration value="slide"/>
+            <xsd:enumeration value="zoom"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="positiveIntListBase">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="\d+(,\d+)*"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+
+    <xsd:simpleType name="trueFalseEnum">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="true"/>
+            <xsd:enumeration value="false"/>
+            <xsd:enumeration value="yes"/>
+            <xsd:enumeration value="no"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+
+
+    <xsd:simpleType name="actionTypeBase">
+        <xsd:union memberTypes="buildInCall"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="buildInCall">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(SetFocus|ClearProperty|SetProperty|ActivateWindow|ReplaceWindow|PlayDisc)(\(.*\))?"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+
+
+    <xsd:simpleType name="conditionalTypeBase">
+        <xsd:union memberTypes="conditionalCallBase"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="conditionalCallBase">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(SetFocus|ClearProperty|SetProperty|ActivateWindow|ReplaceWindow|PlayDisc)(\(.*\))?"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+
+
+
+    <xsd:simpleType name="anyIntBase">
+        <xsd:union memberTypes="xsd:integer"/>
+    </xsd:simpleType>
+
+
+    <xsd:simpleType name="nonNegativeIntBase">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+
+    <xsd:simpleType name="windowBase">
+        <xsd:union memberTypes="windowNameEnum"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="windowNameEnum">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="MyVideos"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="millisBase">
+        <xsd:union memberTypes="xsd:nonNegativeInteger"/>
+    </xsd:simpleType>
+
+
+    <!--  ********************************************************************** -->
+
+    <xsd:complexType name="anythingType" >
+        <xsd:sequence>
+            <xsd:any minOccurs="0" maxOccurs="unbounded" namespace="##any" processContents="lax"/>
+        </xsd:sequence>
+        <xsd:anyAttribute namespace="##any" processContents="lax" />
+    </xsd:complexType>
 
 
 
 
 
-<xsd:simpleType name="depthType">
-    <xsd:restriction base="xsd:float">
-        <xsd:minInclusive value="-1.0"/>
-        <xsd:maxExclusive value="1.0"/>
-    </xsd:restriction>
+    <xsd:simpleType name="depthBase">
+        <xsd:restriction base="xsd:float">
+            <xsd:minInclusive value="-1.0"/>
+            <xsd:maxExclusive value="1.0"/>
+        </xsd:restriction>
+    </xsd:simpleType>
 
-</xsd:simpleType>
+    <xsd:simpleType name="controlTypeEnum" >
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="group"/>
+            <xsd:enumeration value="grouplist"/>
+            <xsd:enumeration value="fadelabel"/>
+            <xsd:enumeration value="image"/>
+            <xsd:enumeration value="multiimage"/>
+            <xsd:enumeration value="button"/>
+            <xsd:enumeration value="radiobutton"/>
+            <xsd:enumeration value="togglebutton"/>
+            <xsd:enumeration value="spin"/>
+            <xsd:enumeration value="settingspin"/>
+            <xsd:enumeration value="scrollbar"/>
+            <xsd:enumeration value="settings"/>
+            <xsd:enumeration value="progress"/>
+            <xsd:enumeration value="list"/>
+            <xsd:enumeration value="wraplist"/>
+            <xsd:enumeration value="fixedlist"/>
+            <xsd:enumeration value="panel"/>
+            <xsd:enumeration value="textbox"/>
+            <xsd:enumeration value="rss"/>
+            <xsd:enumeration value="visualization"/>
+            <xsd:enumeration value="video"/>
+            <xsd:enumeration value="edit"/>
+            <xsd:enumeration value="video"/>
+            <xsd:enumeration value="mover"/>
+            <xsd:enumeration value="resize"/>
+        </xsd:restriction>
+    </xsd:simpleType>
 
-<xsd:simpleType name="controlTypeType" >
-    <xsd:restriction base="xsd:string">
-        <xsd:enumeration value="group"/>
-        <xsd:enumeration value="grouplist"/>
-        <xsd:enumeration value="button"/>
-        <xsd:enumeration value="scrollbar"/>
-    </xsd:restriction>
-</xsd:simpleType>
+    <xsd:simpleType name="controlTypeBase">
+        <xsd:union memberTypes="controlTypeEnum"/>
+    </xsd:simpleType>
 
-<xsd:simpleType name="alignType" >
-    <xsd:restriction base="xsd:string">
-        <xsd:enumeration value="left"/>
-        <xsd:enumeration value="right"/>
-        <xsd:enumeration value="center"/>
-        <xsd:enumeration value="justify"/>
-    </xsd:restriction>
-</xsd:simpleType>
-<xsd:simpleType name="orientationType" >
-    <xsd:restriction base="xsd:string">
-        <xsd:enumeration value="horizontal"/>
-        <xsd:enumeration value="vertical"/>
-     </xsd:restriction>
-</xsd:simpleType>
+    <xsd:simpleType name="alignEnum" >
+        <xsd:annotation>
+            <xsd:documentation>Valid values for justification</xsd:documentation>
+            <xsd:appinfo>Valid values for justification</xsd:appinfo>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="left"/>
+            <xsd:enumeration value="right"/>
+            <xsd:enumeration value="center"/>
+            <xsd:enumeration value="justify"/>
+        </xsd:restriction>
+    </xsd:simpleType>
 
-<xsd:simpleType name="colorNameType" >
-    <xsd:restriction base="xsd:string">
-        <xsd:enumeration value="red"/>
-        <xsd:enumeration value="blue"/>
-        <xsd:enumeration value="green"/>
-        <xsd:enumeration value="black"/>
-        <xsd:enumeration value="white"/>
-    </xsd:restriction>
-</xsd:simpleType>
+    <xsd:simpleType  name="alignTypeBase">
+        <xsd:union memberTypes="alignEnum"/>
+    </xsd:simpleType>
 
-<xsd:simpleType name="hexColorType">
-    <xsd:restriction base="xsd:string">
-        <xsd:pattern value="[0-9a-fA-F]{8}"/>
-    </xsd:restriction>
-</xsd:simpleType>
+    <xsd:simpleType name="orientationEnum" >
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="horizontal"/>
+            <xsd:enumeration value="vertical"/>
+        </xsd:restriction>
+    </xsd:simpleType>
 
-<xsd:simpleType name="colorType">
-    <xsd:union memberTypes="hexColorType colorNameType"/>
-</xsd:simpleType>
+    <xsd:simpleType name="colorNameEnum" >
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="red"/>
+            <xsd:enumeration value="blue"/>
+            <xsd:enumeration value="green"/>
+            <xsd:enumeration value="black"/>
+            <xsd:enumeration value="white"/>
+        </xsd:restriction>
+    </xsd:simpleType>
 
-<xsd:simpleType name="fontType">
-    <xsd:restriction base="xsd:Name"/>
-</xsd:simpleType>
+    <xsd:simpleType name="hexColorType">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="(0x)?[0-9a-fA-F]{8}"/>
+        </xsd:restriction>
+    </xsd:simpleType>
 
-<xsd:simpleType name="zeroOrPositiveInt">
-    <xsd:restriction base="xsd:integer">
-        <xsd:minInclusive value="0"/>
-    </xsd:restriction>
-</xsd:simpleType>
+    <xsd:simpleType name="colorTypeBase">
+        <xsd:union memberTypes="hexColorType colorNameEnum"/>
+    </xsd:simpleType>
 
-<xsd:simpleType name="percentageType">
-    <xsd:restriction base="xsd:string">
-        <xsd:pattern value="1?[0-9]?[0-9]%"></xsd:pattern>
-    </xsd:restriction>
-</xsd:simpleType>
+    <xsd:simpleType name="fontTypeBase">
+        <xsd:restriction base="xsd:Name"/>
+    </xsd:simpleType>
 
-<xsd:simpleType name="centeringType">
-    <xsd:union memberTypes="percentageType zeroOrPositiveInt"/>
-</xsd:simpleType>
+    <xsd:simpleType name="zeroOrPositiveInt">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0"/>
+        </xsd:restriction>
+    </xsd:simpleType>
 
-<xsd:simpleType name="idType">
-    <xsd:restriction base="xsd:integer">
-        <xsd:minInclusive value="0"/>
-    </xsd:restriction>
-</xsd:simpleType>
+    <xsd:simpleType name="percentageType">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="1?[0-9]?[0-9]%"></xsd:pattern>
+        </xsd:restriction>
+    </xsd:simpleType>
 
-<xsd:simpleType name="empty">
-    <xsd:restriction base="xsd:string">
-        <xsd:pattern value=""/>
-    </xsd:restriction>
-</xsd:simpleType>
-<xsd:simpleType name="idRefType">
-    <xsd:union  memberTypes="idType empty"/>
-</xsd:simpleType>
+    <xsd:simpleType name="centeringBase">
+        <xsd:union memberTypes="percentageType zeroOrPositiveInt"/>
+    </xsd:simpleType>
 
-<xsd:simpleType name="trueFalseType">
-    <xsd:restriction base="xsd:string">
-        <xsd:enumeration value="true"/>
-        <xsd:enumeration value="false"/>
-    </xsd:restriction>
-</xsd:simpleType>
+    <xsd:simpleType name="empty">
+        <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="0"/>
+        </xsd:restriction>
+    </xsd:simpleType>
 
-<xsd:simpleType name="viewsType" >
-    <xsd:restriction base="kdt:zeroOrPositiveInt"/>
-</xsd:simpleType>
-
-<xsd:simpleType name="viewType" >
-    <xsd:restriction base="kdt:zeroOrPositiveInt"/>
-</xsd:simpleType>
-
-<xsd:simpleType name="pulseType" >
-    <xsd:restriction base="kdt:zeroOrPositiveInt"/>
-</xsd:simpleType>
+    <xsd:simpleType name="idType">
+        <xsd:restriction base="xsd:nonNegativeInteger"/>
+    </xsd:simpleType>
 
 
-<xsd:simpleType name="imageFilenameType">
-    <xsd:restriction base="xsd:string">
-        <xsd:pattern value="\w+\.(png|jpg|bmp)"/>
-     </xsd:restriction> 
-</xsd:simpleType>
+    <!--  idrefs should not be empty, cleaner to just omit the element. empty
+    is allowed here to be forgiving with the sample xml provided by Kodi -->
+    <xsd:simpleType name="idRefBase">
+        <xsd:union  memberTypes="idType"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="idBase">
+        <xsd:union  memberTypes="idType"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="viewsType" >
+        <xsd:restriction base="kdt:zeroOrPositiveInt"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="viewType" >
+        <xsd:restriction base="kdt:zeroOrPositiveInt"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="pulseType" >
+        <xsd:restriction base="kdt:zeroOrPositiveInt"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="windowDimensionBase">
+        <xsd:restriction base="xsd:nonNegativeInteger"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="windowCoordBase">
+        <xsd:restriction base="xsd:nonNegativeInteger"/>
+    </xsd:simpleType>
 
 
-<xsd:complexType name="textureFocusType">
-     <xsd:simpleContent >
-        <xsd:extension base="kdt:imageFilenameType">
-            <xsd:attribute name="colordiffuse" type="kdt:colorType"/>
-        </xsd:extension> 
-     </xsd:simpleContent>
-</xsd:complexType>
+    <xsd:simpleType name="imageFilenameType">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="\w+\.(png|jpg|bmp)"/>
+        </xsd:restriction>
+    </xsd:simpleType>
 
-<xsd:simpleType name="tweenType">
-    <xsd:restriction base="xsd:string">
-        <xsd:enumeration value="linear"/>
-        <xsd:enumeration value="quadratic"/>
-        <xsd:enumeration value="bounce"/>
-        <xsd:enumeration value="elastic"/>
-        <xsd:enumeration value="cubic"/>
-        <xsd:enumeration value="circle"/>
-        <xsd:enumeration value="sine"/>
-        <xsd:enumeration value="back"/>
-    </xsd:restriction>
-</xsd:simpleType>
-<xsd:simpleType name="easingType">
-    <xsd:restriction base="xsd:string">
-        <xsd:enumeration value="in"/>
-        <xsd:enumeration value="out"/>
-        <xsd:enumeration value="inout"/>
-     </xsd:restriction>
-</xsd:simpleType>
 
-<xsd:complexType name="scrolltimeType">
-     <xsd:simpleContent >
-        <xsd:extension base="kdt:zeroOrPositiveInt">
-            <xsd:attribute name="tween" type="kdt:tweenType"/>
-            <xsd:attribute name="easing" type="kdt:easingType"/>
-        </xsd:extension> 
-     </xsd:simpleContent>
-</xsd:complexType>
+    <xsd:complexType name="textureFocusBase">
+        <xsd:simpleContent >
+            <xsd:extension base="kdt:imageFilenameType">
+                <xsd:attribute name="colordiffuse" type="kdt:colorTypeBase"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:simpleType name="tweenEnum">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="linear"/>
+            <xsd:enumeration value="quadratic"/>
+            <xsd:enumeration value="bounce"/>
+            <xsd:enumeration value="elastic"/>
+            <xsd:enumeration value="cubic"/>
+            <xsd:enumeration value="circle"/>
+            <xsd:enumeration value="sine"/>
+            <xsd:enumeration value="back"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="easingEnum">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="in"/>
+            <xsd:enumeration value="out"/>
+            <xsd:enumeration value="inout"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="scrolltimeType">
+        <xsd:simpleContent >
+            <xsd:extension base="kdt:zeroOrPositiveInt">
+                <xsd:attribute name="tween" type="kdt:tweenEnum"/>
+                <xsd:attribute name="easing" type="kdt:easingEnum"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:simpleType name="animationEnum">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="WindowOpen"/>
+            <xsd:enumeration value="WindowClose"/>
+            <xsd:enumeration value="Visible"/>
+            <xsd:enumeration value="Hidden"/>
+            <xsd:enumeration value="Focus"/>
+            <xsd:enumeration value="Unfocus"/>
+            <xsd:enumeration value="Conditional"/>
+            <xsd:enumeration value="VisibleChange"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="effectEnum">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="fade"/>
+            <xsd:enumeration value="fadediffuse"/>
+            <xsd:enumeration value="rotatex"/>
+            <xsd:enumeration value="rotatey"/>
+            <xsd:enumeration value="slide"/>
+            <xsd:enumeration value="zoom"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:attribute name="condition" type="kdt:conditionType"/>
+    <xsd:attribute name="reversible" type="kdt:trueFalseEnum"/>
+    <xsd:complexType name="effectType">
+        <xsd:attribute name="effect" type="kdt:effectEnum"/>
+        <xsd:attribute name="time" type="xsd:nonNegativeInteger"/>
+        <xsd:attribute name="delay" type="xsd:nonNegativeInteger"/>
+        <xsd:attribute name="start" type="kdt:animationEffectStateBase"/>
+        <xsd:attribute name="end" type="kdt:animationEffectStateBase"/>
+        <xsd:attribute name="acceleration" type="kdt:accelerationBase"/>
+        <xsd:attribute name="center" type="kdt:animationEffectCenterBase"/>
+        <xsd:attribute ref="condition" />
+        <xsd:attribute ref="reversible" />
+        <xsd:attribute name="loop" type="kdt:trueFalseEnum"/>
+        <xsd:attribute name="pulse" type="kdt:trueFalseEnum"/>
+        <xsd:attribute name="tween" type="kdt:tweenEnum"/>
+        <xsd:attribute name="easing" type="kdt:easingEnum"/>
+    </xsd:complexType>
+
+    <xsd:simpleType name="conditionType">
+        <xsd:restriction base="xsd:string"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="accelerationBase">
+        <xsd:restriction base="xsd:float">
+            <xsd:minExclusive value="-1.0"/>
+            <xsd:maxExclusive value="1.0"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="animationEffectCenterBase">
+        <xsd:union>
+            <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="auto"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="\d+,\d+"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+        </xsd:union>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="animationEffectStateBase">
+        <xsd:union memberTypes="animationEffectStateUnion"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="animationEffectStateUnion">
+        <xsd:union>
+            <!--  for fadess -->
+            <xsd:simpleType>
+                <xsd:restriction base="xsd:integer">
+                    <xsd:minExclusive value="0"/>
+                    <xsd:maxExclusive value="100"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <!--  for diffusefadess -->
+            <xsd:simpleType>
+                <xsd:restriction base="kdt:hexColorType"/>
+            </xsd:simpleType>
+            <!--  for slides  -->
+            <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="-?\d+,-?\d+"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <!--  for rotates -->
+            <xsd:simpleType>
+                <xsd:restriction base="xsd:integer">
+                    <xsd:minExclusive value="0"/>
+                    <xsd:maxExclusive value="359"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <!--  for zooms -->
+            <xsd:simpleType>
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="-?\d+,-?\d+(,-?\d+,-?\d+)?"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+        </xsd:union>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="angleBase">
+        <xsd:restriction base="xsd:float">
+            <xsd:minExclusive value="0.0"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="textwidthBase">
+        <xsd:restriction base="xsd:float">
+            <xsd:minExclusive value="0.0"/>
+        </xsd:restriction>
+    </xsd:simpleType>
 
 </xsd:schema> 

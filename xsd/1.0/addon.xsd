@@ -1,4 +1,5 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Liquid Studio (https://www.liquid-technologies.com) -->
 <!-- 
     This schema validate Kodi's xbmcgui window.xml documents
     for addon windows.
@@ -22,154 +23,476 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 xmlns:kdt="http://kodi.tv/xbmcgui/xsd/1.0/kdt"
 xmlns="http://kodi.tv/xbmcgui/xsd/1.0/addon"
+xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
 targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/addon"
 
 >
+    <!--  addon definitions are also imported into skin definitions -->
+    <!--  type definition are needed in both and provide some options for
+    customizin the schema for your  use-->
+    <xsd:import namespace="http://kodi.tv/xbmcgui/xsd/1.0/kdt" schemaLocation="types.xsd" />
+    <xsd:import namespace="http://kodi.tv/xbmcgui/xsd/1.0/kdt" schemaLocation="file://c:/dev/Kodi/xbmxguid-liquid/xbmcguiXsd/Schemas/1.0/types.xsd" />
 
-<xsd:import namespace="http://kodi.tv/xbmcgui/xsd/1.0/kdt" schemaLocation="types.xsd" />
+    <!--  the window element is the sole base element for addon.xsd -->
+    <xsd:element name="window"  vc:maxVersion="1.0" vc:minVersion="1.0" >
+        <xsd:complexType>
+            <xsd:sequence  maxOccurs="unbounded">
+                <!--  Window Header -->
+                <xsd:choice >
+                    <xsd:element name="onload" type="actionType"></xsd:element>
+                    <xsd:element name="onunload" type="actionType"></xsd:element>
+                    <xsd:element name="defaultcontrol" >
+                        <xsd:complexType mixed="true">
+                            <xsd:attribute name="always" type="trueFalseType"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="views" type="positiveIntListType"/>
+                    <xsd:element name="visible" type="trueFalseType"/>
+                    <xsd:element name="backgroundColor" type="colorType"/>
+                    <xsd:element name="menucontrol"  type="idRefType"/>
+                    <xsd:element name="animation">
+                        <xsd:complexType>
+                            <xsd:attribute name="effect" type="effectType"/>
+                            <xsd:attribute name="end" type="animationEffectStateType"/>
+                            <xsd:attribute name="type" type="millisType"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="zorder"  type="nonNegativeInteger"/>
+                    <xsd:element name="coordinates">
+                        <xsd:complexType>
+                            <xsd:sequence maxOccurs="4">
+                                <xsd:choice>
+                                    <xsd:element name="left" type="anyIntType"/>
+                                    <xsd:element name="top" type="anyIntType"/>
+                                    <xsd:element name="origin" >
+                                        <xsd:complexType mixed="true">
+                                            <xsd:attribute name="x" type="anyIntType"/>
+                                            <xsd:attribute name="y" type="anyIntType"/>
+                                        </xsd:complexType>
+                                    </xsd:element>
+                                </xsd:choice>
+                            </xsd:sequence>
+                        </xsd:complexType>
 
-<xsd:element name="window" type="windowType"/>
-<xsd:element name="view" type="kdt:zeroOrPositiveInt"/>
-<xsd:element name="control" type="controlType"/>
-<xsd:element name="controls" type="controlsType"/>
-<xsd:element name="description" type="xsd:string"/>
-<xsd:element name="id" type="kdt:idType"/>
-<xsd:element name="left" type="kdt:zeroOrPositiveInt"/>
-<xsd:element name="top" type="kdt:zeroOrPositiveInt"/>
-<xsd:element name="right" type="kdt:zeroOrPositiveInt"/>
-<xsd:element name="bottom" type="kdt:zeroOrPositiveInt"/>
-<xsd:element name="width" type="kdt:zeroOrPositiveInt"/>
-<xsd:element name="height" type="kdt:zeroOrPositiveInt"/>
-<xsd:element name="centerleft" type="kdt:centeringType"/>
-<xsd:element name="centerright" type="kdt:centeringType"/>
-<xsd:element name="centertop" type="kdt:centeringType"/>
-<xsd:element name="centerbottom" type="kdt:centeringType"/>
-<xsd:element name="visible" type="kdt:trueFalseType"/>
-<xsd:element name="animation" type="xsd:string"/>
-<xsd:element name="camera" type="xsd:string"/>
-<xsd:element name="depth" type="xsd:string"/>
-
-<xsd:element name="colordiffuse" type="kdt:colorType"/>
-<xsd:element name="pulseonselect" type="kdt:trueFalseType"/>
-
-<xsd:element name="showonepage" type="kdt:trueFalseType"/>
-<xsd:element name="orientation" type="kdt:orientationType"/>
-
-<xsd:element name="onup" type="kdt:idRefType"/>
-<xsd:element name="ondown" type="kdt:idRefType"/>
-<xsd:element name="onleft" type="kdt:idRefType"/>
-<xsd:element name="onright" type="kdt:idRefType"/>
-
-<xsd:element name="itemgap" type="kdt:zeroOrPositiveInt"/>
-<xsd:element name="usecontrolcoords" type="kdt:trueFalseType"/>
-<xsd:element name="defaultcontrol" type="kdt:idRefType"/>
-
-<xsd:element name="texturefocus" type="kdt:textureFocusType"/>
-<xsd:element name="texturenofocus" type="kdt:textureFocusType"/>
-
-<xsd:element name="label" type="xsd:string"/>
-<xsd:element name="font" type="kdt:fontType"/>
-<xsd:element name="align" type="kdt:alignType"/>
-<xsd:element name="aligny" type="kdt:alignType"/>
-<xsd:element name="textcolor" type="kdt:colorType"/>
-<xsd:element name="focusedcolor" type="kdt:colorType"/>
-<xsd:element name="disabledcolor" type="kdt:colorType"/>
-<xsd:element name="invalidcolor" type="kdt:colorType"/>
-<xsd:element name="wrapmultiline" type="kdt:trueFalseType"/>
-
-<xsd:element name="scrolltime" type="kdt:scrolltimeType"/>
-<xsd:element name="pagecontrol" type="kdt:idRefType"/>
+                    </xsd:element>
+                    <xsd:element name="previouswindow" type="windowType"/>
+                    <xsd:element ref="control"/>
+                    <xsd:element name="controls">
+                        <xsd:complexType>
+                            <xsd:sequence >
+                                <xsd:element ref="control" maxOccurs="unbounded"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
 
 
 
+                </xsd:choice>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+    
+    <!--  control appears both in standalone and in the controls list
+    so must be a root element even though it's not a legal root element
+    for Kodi
+    -->
+    <xsd:element  name="control" >
+        <xsd:complexType>
+            <xsd:choice  maxOccurs="unbounded">
+                <xsd:element name="view" type="nonNegativeInteger"/>
+                <xsd:element name="description" type="xsd:string"/>
+                <xsd:element name="id" type="idType"/>
+                <xsd:element name="left" type="windowCoordType"/>
+                <xsd:element name="top" type="windowCoordType"/>
+                <xsd:element name="right" type="windowCoordType"/>
+                <xsd:element name="bottom" type="windowCoordType"/>
+                <xsd:element name="width" type="windowDimensionType"/>
+                <xsd:element name="height" type="windowDimensionType"/>
+                <xsd:element name="centerleft" type="centeringType"/>
+                <xsd:element name="centerright" type="centeringType"/>
+                <xsd:element name="centertop" type="centeringType"/>
+                <xsd:element name="centerbottom" type="centeringType"/>
+                <xsd:element name="visible" type="trueFalseType"/>
+                <xsd:element name="camera" type="xsd:string"/>
+                <xsd:element name="depth" type="xsd:string"/>
 
- <xsd:complexType name="windowType"  >
-    <xsd:sequence>
-         <xsd:choice minOccurs="0" maxOccurs="unbounded">
-                <xsd:element  ref="view"/>
-                <xsd:element ref="controls"/>
-                <xsd:element ref="control" />
+                <xsd:element name="colordiffuse" type="colorType"/>
+                <xsd:element name="pulseonselect" type="trueFalseType"/>
+
+                <xsd:element name="showonepage" type="trueFalseType"/>
+                <xsd:element name="orientation" type="orientationType"/>
+
+                <xsd:element name="onup" type="idRefType"/>
+                <xsd:element name="ondown" type="idRefType"/>
+                <xsd:element name="onleft" type="idRefType"/>
+                <xsd:element name="onright" type="idRefType"/>
+
+                <xsd:element name="itemgap" type="nonNegativeInteger"/>
+                <xsd:element name="usecontrolcoords" type="trueFalseType"/>
+                <xsd:element name="defaultcontrol" type="idRefType"/>
+
+                <xsd:element name="texturefocus" type="kdt:textureFocusBase"/>
+                <xsd:element name="texturenofocus" type="kdt:textureFocusBase"/>
+
+                <xsd:element name="label" type="xsd:string"/>
+                <xsd:element name="font" type="fontType"/>
+                <xsd:element name="align" type="alignType"/>
+                <xsd:element name="aligny" type="alignType"/>
+                <xsd:element name="textcolor" type="colorType"/>
+                <xsd:element name="focusedcolor" type="colorType"/>
+                <xsd:element name="disabledcolor" type="colorType"/>
+                <xsd:element name="invalidcolor" type="colorType"/>
+ 
+                <xsd:element name="scrolltime" type="scrolltimeType"/>
+                <xsd:element name="pagecontrol" type="idRefType"/>
+
+                 <xsd:element name="wrapmultiline" type="trueFalseType"/>
+
+                <xsd:element name="animation" >
+                    <xsd:complexType mixed="true"  >
+                        <xsd:sequence >
+                            <xsd:element ref="effect" minOccurs="0" maxOccurs="unbounded"/>
+                        </xsd:sequence>
+                        <xsd:attribute name="type" type="animationType"/>
+                        <xsd:attributeGroup ref="animationAttrs"/>
+                    </xsd:complexType>
+                </xsd:element>
+
+
             </xsd:choice>
+            <xsd:attribute name="id" type="idType" />
+            <xsd:attribute name="type" type="controlTypeType" use="required"/>
+        </xsd:complexType>
+    </xsd:element>
+
+
+    <!--  bring base types common to both addons and windows into this namespace.
+    Many of the type composite union enums and value restrictions with function
+    definitions. In essence this is where the ability to use variable and function
+    is mixed with the ability to hard-code values.-->
+
+    <xsd:simpleType name="alignType">
+        <xsd:union memberTypes="kdt:alignTypeBase"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="fontType">
+        <xsd:union memberTypes="kdt:fontTypeBase"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="centeringType">
+        <xsd:union memberTypes="kdt:centeringBase"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="millisType">
+        <xsd:union memberTypes="kdt:millisBase"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="windowDimensionType">
+        <xsd:union memberTypes="kdt:windowDimensionBase"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="windowCoordType">
+        <xsd:union memberTypes="kdt:windowCoordBase"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="controlTypeType">
+        <xsd:union memberTypes="kdt:controlTypeBase"/>
+    </xsd:simpleType>
+
+ <!--   <xsd:complexType name="textureFocusType">
+        <xsd:complexContent>
+            <xsd:extension base="kdt:textureFocusBase"></xsd:extension>
+        </xsd:complexContent>
+     </xsd:complexType>
+
+-->
+    <xsd:simpleType name="idType">
+        <xsd:union memberTypes="kdt:idBase"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="idRefType">
+        <xsd:union memberTypes="kdt:idRefBase"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="positiveIntListType">
+        <xsd:union memberTypes="kdt:positiveIntListBase"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="windowType">
+        <xsd:union memberTypes="kdt:windowBase"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="animationType">
+        <xsd:union memberTypes="kdt:animationTypeEnum"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="animationEffectCenterType">
+        <xsd:union memberTypes="kdt:animationEffectCenterBase"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="animationEffectStateType">
+        <xsd:union memberTypes="kdt:animationEffectStateBase"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="accelerationType">
+        <xsd:union memberTypes="kdt:accelerationBase"/>
+    </xsd:simpleType>
+
+
+    <xsd:simpleType name="effectType">
+        <xsd:union memberTypes="kdt:effectEnum"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="actionType">
+        <xsd:union memberTypes="kdt:actionTypeBase"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="colorType">
+        <xsd:union memberTypes="kdt:colorTypeBase"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="easingType">
+        <xsd:union memberTypes="kdt:easingEnum"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="orientationType">
+        <xsd:union memberTypes="kdt:orientationEnum"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="tweenType">
+        <xsd:union memberTypes="kdt:tweenEnum"/>
+    </xsd:simpleType>
+
+
+    <xsd:simpleType name="conditionalType">
+        <xsd:union memberTypes="kdt:conditionalTypeBase"/>
+    </xsd:simpleType>
+
+
+    <xsd:simpleType name="trueFalseType">
+        <xsd:union memberTypes="kdt:trueFalseEnum kdt:conditionalCallBase"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="yesNoType">
+        <xsd:union memberTypes="kdt:yesNoEnum kdt:conditionalCallBase"/>
+    </xsd:simpleType>
+
+
+    <xsd:simpleType name="anyIntType">
+        <xsd:union memberTypes="kdt:anyIntBase"/>
+    </xsd:simpleType>
+
+
+    <xsd:simpleType name="nonNegativeInteger">
+        <xsd:union memberTypes="kdt:nonNegativeIntBase"/>
+    </xsd:simpleType>
+
+
+
+
+    <xsd:complexType name="scrolltimeType">
+        <xsd:simpleContent >
+            <xsd:extension base="xsd:nonNegativeInteger">
+                <xsd:attribute name="tween" type="tweenType"/>
+                <xsd:attribute name="easing" type="easingType"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+
+    <xsd:attributeGroup name="animationAttrs">
+        <xsd:attribute name="effect" type="effectType" />
+        <xsd:attribute name="time" type="nonNegativeInteger" />
+        <xsd:attribute name="delay" type="nonNegativeInteger"/>
+        <xsd:attribute name="start" type="animationEffectStateType"/>
+        <xsd:attribute name="end" type="animationEffectStateType"/>
+        <xsd:attribute name="acceleration" type="accelerationType"/>
+        <xsd:attribute name="center" type="animationEffectCenterType"/>
+        <xsd:attribute name="condition" type="conditionalType"/>
+        <xsd:attribute name="reversible" type="trueFalseType"/>
+        <xsd:attribute name="loop" type="trueFalseType"/>
+        <xsd:attribute name="pulse" type="trueFalseType"/>
+        <xsd:attribute name="tween" type="tweenType"/>
+        <xsd:attribute name="easing" type="easingType"/>
+    </xsd:attributeGroup>
+
+    <!--  ****************************************************************************************** -->
+<!--
+    <xsd:element name="view" type="nonNegativeInteger"/>
+    <xsd:element name="description" type="xsd:string"/>
+    <xsd:element name="id" type="kdt:idType"/>
+    <xsd:element name="left" type="kdt:windowCoord"/>
+    <xsd:element name="top" type="kdt:windowCoord"/>
+    <xsd:element name="right" type="kdt:windowCoord"/>
+    <xsd:element name="bottom" type="kdt:windowCoord"/>
+    <xsd:element name="width" type="kdt:windowDimension"/>
+    <xsd:element name="height" type="kdt:windowDimension"/>
+    <xsd:element name="centerleft" type="kdt:centeringType"/>
+    <xsd:element name="centerright" type="kdt:centeringType"/>
+    <xsd:element name="centertop" type="kdt:centeringType"/>
+    <xsd:element name="centerbottom" type="kdt:centeringType"/>
+    <xsd:element name="visible" type="trueFalseType"/>
+    <xsd:element name="camera" type="xsd:string"/>
+    <xsd:element name="depth" type="xsd:string"/>
+
+    <xsd:element name="colordiffuse" type="kdt:colorTypeBase"/>
+    <xsd:element name="pulseonselect" type="trueFalseType"/>
+
+    <xsd:element name="showonepage" type="trueFalseType"/>
+    <xsd:element name="orientation" type="orientationType"/>
+
+    <xsd:element name="onup" type="idRefType"/>
+    <xsd:element name="ondown" type="idRefType"/>
+    <xsd:element name="onleft" type="idRefType"/>
+    <xsd:element name="onright" type="idRefType"/>
+
+    <xsd:element name="itemgap" type="nonNegativeInteger"/>
+    <xsd:element name="usecontrolcoords" type="trueFalseType"/>
+    <xsd:element name="defaultcontrol" type="idRefType"/>
+
+    <xsd:element name="texturefocus" type="textureFocusType"/>
+    <xsd:element name="texturenofocus" type="textureFocusType"/>
+
+    <xsd:element name="label" type="xsd:string"/>
+    <xsd:element name="font" type="kdt:fontType"/>
+    <xsd:element name="align" type="alignType"/>
+    <xsd:element name="aligny" type="alignType"/>
+    <xsd:element name="textcolor" type="colorType"/>
+    <xsd:element name="focusedcolor" type="colorType"/>
+    <xsd:element name="disabledcolor" type="colorType"/>
+    <xsd:element name="invalidcolor" type="colorType"/>
+    <xsd:element name="wrapmultiline" type="trueFalseType"/>
+
+    <xsd:element name="scrolltime" type="scrolltimeType"/>
+    <xsd:element name="pagecontrol" type="idRefType"/>
+
+
+-->
+
+
+
+<!--
+    <xsd:complexType name="controlType" >
+        <xsd:choice  maxOccurs="unbounded">
+            <xsd:element ref="control"/>
+            <xsd:element ref="description"/>
+            <xsd:element ref="id" />
+            <xsd:element ref="left" />
+            <xsd:element ref="top"/>
+            <xsd:element ref="right"/>
+            <xsd:element ref="bottom"/>
+            <xsd:element ref="width"/>
+            <xsd:element ref="height"/>
+            <xsd:element ref="centerleft"/>
+            <xsd:element ref="centerright"/>
+            <xsd:element ref="centertop"/>
+            <xsd:element ref="centerbottom"/>
+            <xsd:element ref="visible"/>
+            <xsd:element ref="camera"/>
+            <xsd:element ref="depth"/>
+
+            <xsd:element ref="colordiffuse"/>
+            <xsd:element ref="pulseonselect"/>
+            <xsd:element ref="orientation"/>
+            <xsd:element ref="showonepage"/>
+
+            <xsd:element ref="onup"/>
+            <xsd:element ref="ondown"/>
+            <xsd:element ref="onleft" maxOccurs="1"/>
+            <xsd:element ref="onright"/>
+
+            <xsd:element ref="itemgap"/>
+            <xsd:element ref="usecontrolcoords"/>
+            <xsd:element ref="defaultcontrol"/>
+            <xsd:element ref="scrolltime"/>
+            <xsd:element ref="pagecontrol"/>
+
+            <xsd:element ref="label"/>
+            <xsd:element ref="font"/>
+            <xsd:element ref="textcolor"/>
+            <xsd:element ref="focusedcolor"/>
+            <xsd:element ref="disabledcolor"/>
+            <xsd:element ref="invalidcolor"/>
+            <xsd:element ref="align"/>
+            <xsd:element ref="aligny"/>
+            <xsd:element ref="wrapmultiline"/>
+
+            <xsd:element ref="texturefocus"/>
+            <xsd:element ref="texturenofocus"/>
+            <xsd:element ref="animation"/>
+
+
+        </xsd:choice>
+        <xsd:attribute name="id" type="kdt:idType" />
+        <xsd:attribute name="type" type="kdt:controlTypeType" use="required"/>
+    </xsd:complexType>-->
+
+    <!--  in XSD 1.1 this should alternate based on the presence of the type
+     attribute -->
+    <xsd:complexType name="compoundAnimation">
+        <xsd:sequence>
+            <xsd:element ref="effect" maxOccurs="unbounded"/>
+
         </xsd:sequence>
-   <xsd:anyAttribute namespace="##any" processContents="lax" />
-</xsd:complexType>
-
-<xsd:complexType name="controlsType">
-    <xsd:sequence >
-            <xsd:element ref="control" maxOccurs="unbounded"/>
-    </xsd:sequence>
-</xsd:complexType>
+        <xsd:attribute name="type" type="animationType"/>
+        <xsd:attribute name="condition" type="conditionalType"/>
+        <xsd:attribute name="reversible" type="trueFalseType"/>
+    </xsd:complexType>
 
 
-
-<xsd:complexType name="groupListControlType" >
-    <xsd:complexContent>
-        <xsd:extension base="controlType">
-            <xsd:choice minOccurs="0" maxOccurs="unbounded">
-                <xsd:element name="itemgap" type="kdt:zeroOrPositiveInt"/>
-                <xsd:element name="orientation" type="kdt:orientationType"/>
-                <xsd:element name="usecontrolcoords" type="kdt:trueFalseType"/>
-                <xsd:element name="align" type="kdt:alignType"/>
-                <xsd:element name="defaultControl" type="kdt:zeroOrPositiveInt"/>
-            </xsd:choice>
-        </xsd:extension>
-    </xsd:complexContent>
-</xsd:complexType>
+    <xsd:complexType name="simpleAnimation">
+        <xsd:simpleContent>
+            <xsd:extension base="animationType">
+                <xsd:attributeGroup ref="animationAttrs"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
 
 
+    <xsd:element name="effect" >
+        <xsd:complexType>
+            <xsd:simpleContent>
+                <xsd:extension base="xsd:string">
+                    <xsd:attribute name="type" type="effectType"/>
+                    <xsd:attributeGroup ref="animationAttrs"/>
+                </xsd:extension>
+            </xsd:simpleContent>
+        </xsd:complexType>
+    </xsd:element>
 
-<xsd:complexType name="controlType" >
-    <xsd:choice  maxOccurs="unbounded">
-        <xsd:element ref="control"/>
-        <xsd:element ref="description"/>
-        <xsd:element ref="id" />
-        <xsd:element ref="left" />
-        <xsd:element ref="top"/>
-        <xsd:element ref="right"/>
-        <xsd:element ref="bottom"/>
-        <xsd:element ref="width"/>
-        <xsd:element ref="height"/>
-        <xsd:element ref="centerleft"/>
-        <xsd:element ref="centerright"/>
-        <xsd:element ref="centertop"/>
-        <xsd:element ref="centerbottom"/>
-        <xsd:element ref="visible"/>
-        <xsd:element ref="animation"/>
-        <xsd:element ref="camera"/>
-        <xsd:element ref="depth"/>
 
-        <xsd:element ref="colordiffuse"/>
-        <xsd:element ref="pulseonselect"/>
-        <xsd:element ref="orientation"/>
-        <xsd:element ref="showonepage"/>
 
-        <xsd:element ref="onup"/>
-        <xsd:element ref="ondown"/>
-        <xsd:element ref="onleft"/>
-        <xsd:element ref="onright"/>
 
-        <xsd:element ref="itemgap"/>
-        <xsd:element ref="usecontrolcoords"/>
-        <xsd:element ref="defaultcontrol"/>
-        <xsd:element ref="scrolltime"/>
-        <xsd:element ref="pagecontrol"/>
+    <xsd:element name="animation">
+        <xsd:complexType mixed="true" >
+            <xsd:sequence >
+                <xsd:element ref="effect" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+            <xsd:attribute name="type" type="animationType"/>
 
-        <xsd:element ref="label"/>
-        <xsd:element ref="font"/>
-        <xsd:element ref="textcolor"/>
-        <xsd:element ref="focusedcolor"/>
-        <xsd:element ref="disabledcolor"/>
-        <xsd:element ref="invalidcolor"/>
-        <xsd:element ref="align"/>
-        <xsd:element ref="aligny"/>
-        <xsd:element ref="wrapmultiline"/>
+            <xsd:attributeGroup ref="animationAttrs"/>
+        </xsd:complexType>
 
-        <xsd:element ref="texturefocus"/>
-        <xsd:element ref="texturenofocus"/>
-    </xsd:choice>
-    <xsd:attribute name="id" type="kdt:idType" />
-    <xsd:attribute name="type" type="kdt:controlTypeType" use="required"/>
-</xsd:complexType>
+    </xsd:element>
+
+
+    <xsd:simpleType name="RestrictedString">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="xyz" />
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:element name="Test">
+        <xsd:complexType>
+            <xsd:simpleContent>
+                <xsd:extension base="effectType">
+                    <xsd:attributeGroup ref="animationAttrs"/>
+                </xsd:extension>
+            </xsd:simpleContent>
+        </xsd:complexType>
+    </xsd:element>
+
+
+
 
 
 
