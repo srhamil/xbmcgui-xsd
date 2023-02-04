@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- coordinate are based on 720i:  1280w 720h-->
+<groupControlTest type="group"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://kodi.tv/xbmcgui/xsd/1.0/skin file:///c:/dev/Kodi/xbmcgui-xsd/xsd/1.0/skin.xsd"
+xmlns="http://kodi.tv/xbmcgui/xsd/1.0/skin" xmlns:addon="http://kodi.tv/xbmcgui/xsd/1.0/addon"
+
+><description>My first group control</description>
+    <left>80</left>
+    <top>60</top>
+    <width>250</width>
+    <height>30</height>
+    <defaultcontrol>2</defaultcontrol>
+    <visible>true</visible>
+    <onup>2</onup>
+    <ondown>3</ondown>
+    <onleft>1</onleft>
+    <onright>1</onright>
+    <control id="101" type="button"></control>
+    <control id="102" type="button"/>
+</groupControlTest>
