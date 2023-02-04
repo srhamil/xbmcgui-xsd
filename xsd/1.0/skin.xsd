@@ -56,7 +56,7 @@
         <xsd:complexContent>
             <xsd:extension base="basicControlType">
                 <xsd:sequence>
-                    <xsd:choice maxOccurs="unbounded">
+                    <xsd:choice minOccurs="0" maxOccurs="unbounded">
                         <xsd:element ref="include" />
                     </xsd:choice>
                 </xsd:sequence>
@@ -78,14 +78,23 @@
         <xsd:complexContent>
             <xsd:extension base="controlType">
                 <xsd:sequence>
-                    <xsd:choice maxOccurs="unbounded">
+                    <xsd:choice minOccurs="0" maxOccurs="unbounded">
                         <xsd:group ref="focusableControlTags"/>
-                        <xsd:element ref="control" />
+                        <xsd:group ref="defaultControlTags"/>
+                        <xsd:group ref="basicGroupControlTags"/>
                     </xsd:choice>
                 </xsd:sequence>
             </xsd:extension>
         </xsd:complexContent>
     </xsd:complexType>
+    <xsd:group name="basicGroupControlTags">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:element ref="defaultcontrol" />
+                <xsd:element ref="control" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:group>
 
     <xsd:complexType name="groupListControlType">
         <xsd:sequence>
@@ -94,8 +103,9 @@
                 <xsd:element name="orientation" type="orientationType" />
                 <xsd:element name="usecontrolcoords" type="trueFalseType" />
                 <xsd:element name="align" type="alignType" />
-                <xsd:element name="defaultControl" type="zeroOrPositiveInt" />
+                <xsd:group ref="basicGroupControlTags"/>
                 <xsd:group ref="defaultControlTags" />
+                <xsd:group ref="focusableControlTags" />            
             </xsd:choice>
         </xsd:sequence>
     </xsd:complexType>
@@ -106,9 +116,18 @@
                 <xsd:group ref="defaultControlTags" />
                 <xsd:group ref="textTags" />
                 <xsd:group ref="scrollTags" />
-            </xsd:choice>
+                <xsd:group ref="posTags" />
+                <xsd:group ref="infoTags" />
+                <xsd:group ref="labelControlTags"/>
+                <xsd:group ref="hasPathTags"/>
+                </xsd:choice>
         </xsd:sequence>
     </xsd:complexType>
+    <xsd:group name="labelControlTags">
+        <xsd:choice>
+            <xsd:element ref="number"/>
+         </xsd:choice>
+    </xsd:group>
 
     <xsd:complexType name="fadeLabelControlType">
         <xsd:sequence>
@@ -117,12 +136,21 @@
                 <xsd:group ref="textTags" />
                 <xsd:group ref="scrollTags" />
                 <xsd:group ref="posTags" />
+                <xsd:group ref="infoTags" />
+                <xsd:group ref="multiStuffTags" />
                 <xsd:element ref="scrollout" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:group name="multiStuffTags">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
                 <xsd:element ref="pauseatend" />
                 <xsd:element ref="randomize" />
             </xsd:choice>
         </xsd:sequence>
-    </xsd:complexType>
+    </xsd:group>
 
     <xsd:complexType name="imageControlType">
         <xsd:sequence>
@@ -131,9 +159,11 @@
                 <xsd:group ref="imageControlTags" />
                 <xsd:group ref="infoTags" />
                 <xsd:group ref="fadeTags" />
+                <xsd:group ref="posTags" />
             </xsd:choice>
         </xsd:sequence>
     </xsd:complexType>
+    <xsd:element name="imageControlTest" type="imageControlType"/>
 
 
     <xsd:group name="imageControlTags">
@@ -164,7 +194,10 @@
                 <xsd:group ref="defaultControlTags" />
                 <xsd:group ref="infoTags" />
                 <xsd:group ref="fadeTags" />
+                <xsd:group ref="posTags" />
                 <xsd:group ref="multiImageControlTags" />
+                <xsd:group ref="imageControlTags" />
+                <xsd:group ref="multiStuffTags" />
             </xsd:choice>
         </xsd:sequence>
     </xsd:complexType>
@@ -180,6 +213,8 @@
             </xsd:choice>
         </xsd:sequence>
     </xsd:group>
+
+    <xsd:element name="multiImageControlTest" type="multiImageControlType"/>
 
 
     <xsd:complexType name="buttonControlType">
@@ -202,6 +237,8 @@
                 <xsd:group ref="focusableControlTags" />
                 <xsd:group ref="posTags" />
                 <xsd:group ref="textureFocusTags" />
+                <xsd:group ref="radioButtonControlTags" />
+                <xsd:group ref="selectableControlTags" />
             </xsd:choice>
         </xsd:sequence>
     </xsd:complexType>
@@ -217,6 +254,7 @@
             </xsd:choice>
         </xsd:sequence>
     </xsd:group>
+    <xsd:element name="radioButtonControlTest" type="radioButtonControlType"/>
 
 
     <xsd:complexType name="toggleButtonControlType">
@@ -226,6 +264,10 @@
                 <xsd:group ref="textureFocusTags"/>
                 <xsd:group ref="focusableControlTags"/>
                 <xsd:group ref="toggleButtonControTags"/>
+                <xsd:group ref="posTags"/>
+                <xsd:group ref="radioButtonControlTags"/>
+                <xsd:group ref="selectableControlTags"/>
+                <xsd:group ref="textTags"/>
             </xsd:choice>
         </xsd:sequence>
     </xsd:complexType>
@@ -241,6 +283,7 @@
             </xsd:choice>
         </xsd:sequence>
     </xsd:group>
+    <xsd:element name="toggleButtonControlTest" type="toggleButtonControlType"/>
 
     <xsd:complexType name="spinControlType">
         <xsd:sequence>
@@ -363,12 +406,18 @@
                 <xsd:group ref="scrollTags" />
                 <xsd:group ref="posTags" />
                 <xsd:group ref="textureFocusTags" />
+                <xsd:group ref="hasPathTags" />
                 <xsd:element ref="hinttext" />
-                <xsd:element ref="haspath" />
                 <xsd:element ref="pulseonselect" />
             </xsd:choice>
         </xsd:sequence>
     </xsd:complexType>
+
+    <xsd:group name="hasPathTags">
+        <xsd:choice>
+            <xsd:element ref="haspath" />
+        </xsd:choice>
+    </xsd:group>
 
 
     <xsd:complexType name="EPGRGridControlType">
@@ -396,13 +445,15 @@
     </xsd:complexType>
 
 
+
     <!--  elements that can be used for unit testng of the 
     control types -->
     <xsd:element name="buttonControlTest" type="buttonControlType" />
     <xsd:element name="labelControlTest" type="labelControlType" />
     <xsd:element name="fadeLabelControlTest" type="fadeLabelControlType" />
     <xsd:element name="editControlTest" type="editControlType" />
-    <xsd:element name="groupControlTest"/>
+    <xsd:element name="groupControlTest" type="groupControlType"/>
+    <xsd:element name="groupListControlTest" type="groupListControlType"/>
 
 
     <!-- elements that are used to compose the various types -->
@@ -417,6 +468,7 @@
     <xsd:element name="control" type="controlType" />
     <xsd:element name="controls" type="controlsType" />
     <xsd:element name="description" type="xsd:string" />
+    <xsd:element name="type" type="kdt:controlTypeEnum" />
     <xsd:element name="id" type="idType" />
     <xsd:element name="left" type="windowCoord" />
     <xsd:element name="top" type="windowCoord" />
@@ -439,6 +491,7 @@
 
     <xsd:element name="colordiffuse" type="colorType" />
     <xsd:element name="pulseonselect" type="trueFalseType" />
+    <xsd:element name="selected" type="conditionType" />
 
     <xsd:element name="showonepage" type="trueFalseType" />
     <xsd:element name="orientation" type="orientationType" />
@@ -539,6 +592,8 @@
                 <xsd:extension base="xsd:string">
                     <xsd:attribute name="border" type="zeroOrPositiveInt" />
                     <xsd:attribute name="colordiffuse" type="colorType" />
+                    <xsd:attribute name="flipx" type="trueFalseType" />
+                    <xsd:attribute name="flipy" type="trueFalseType" />
                 </xsd:extension>
 
             </xsd:simpleContent>
@@ -623,6 +678,13 @@
             </xsd:choice>
         </xsd:sequence>
     </xsd:group>
+    <xsd:group name="selectableControlTags">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:element ref="selected" />
+             </xsd:choice>
+        </xsd:sequence>
+    </xsd:group>
 
     <!--  used to specify text based on focus  -->
     <xsd:group name="textureFocusTags">
@@ -668,7 +730,6 @@
 
                 <xsd:element ref="itemgap" />
                 <xsd:element ref="usecontrolcoords" />
-                <xsd:element ref="defaultcontrol" />
                 <xsd:element ref="pagecontrol" />
 
                 <xsd:element ref="headlinecolor" />
@@ -700,9 +761,9 @@
         <xsd:sequence >
             <xsd:choice minOccurs="0" maxOccurs="unbounded">
                 <!--  tags available to all controls  -->
-                <xsd:element ref="include" />
 
                 <xsd:element ref="description" />
+                <xsd:element ref="type" />
                 <xsd:element ref="id" />
                 <xsd:element ref="left" />
                 <xsd:element ref="top" />
@@ -823,6 +884,7 @@
         <xsd:restriction base="xsd:string">
             <xsd:enumeration value="scale" />
             <xsd:enumeration value="keep" />
+            <xsd:enumeration value="stretch" />
         </xsd:restriction>
     </xsd:simpleType>
 
