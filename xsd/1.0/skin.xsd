@@ -5,7 +5,7 @@
     for skin windows.
     skin windows should use the parellel skin.xsd schema.
 
-    The winow element must include these attributes:
+    The window element must include these attributes:
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
         xsi:schemaLocation="http://kodi.tv/xbmcgui/xsd/1.0/skin skin.xsd"
         xmlns="http://kodi.tv/xbmcgui/xsd/skin"
@@ -21,47 +21,48 @@
 
 -->
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-xmlns="http://kodi.tv/xbmcgui/xsd/1.0/skin"
-xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
-            xmlns:kdt="http://kodi.tv/xbmcgui/xsd/1.0/kdt"
-targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
-
+    xmlns="http://kodi.tv/xbmcgui/xsd/1.0/skin"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+    xmlns:kdt="http://kodi.tv/xbmcgui/xsd/1.0/kdt"
+    targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
 >
     <!--  addon definitions are also imported into skin definitions -->
     <!--  type definition are needed in both and provide some options for
     customizin the schema for your  use-->
     <xsd:import namespace="http://kodi.tv/xbmcgui/xsd/1.0/kdt" schemaLocation="types.xsd" />
-    <xsd:import namespace="http://kodi.tv/xbmcgui/xsd/1.0/kdt" schemaLocation="file://c:/dev/Kodi/xbmxguid-liquid/xbmcguiXsd/Schemas/1.0/types.xsd" />
+         
 
 
-    
+
     <!-- This type is the base for all control type and defines attributes and
         elements that are valid for any type of control. -->
-        <xsd:complexType name="basicControlType">
-            <xsd:choice maxOccurs="unbounded">
-               <xsd:group ref="defaultControlTags"/>
-            </xsd:choice>
-           <xsd:attribute name="id" type="idType" />
-           <xsd:attribute name="type" type="controlTypeEnum" use="required"/>
-   </xsd:complexType>
+    <xsd:complexType name="basicControlType">
+        <xsd:choice maxOccurs="unbounded">
+            <xsd:group ref="defaultControlTags" />
+        </xsd:choice>
+        <xsd:attribute name="id" type="idType" />
+        <xsd:attribute name="type" type="controlTypeEnum" use="required" />
+    </xsd:complexType>
 
-   <!-- This type extends the basicControlType defintion to include common elements for
+
+
+    <!-- This type extends the basicControlType defintion to include common elements for
     specific instances of schemas. For instance this is there the control type definitions
     are extended to support includes for skin.xml -->
-   
+
     <!-- This type is the base for all control type and defines attributes and
         elements that are valid for any type of control in a xsd 1.0 or 1.1 skin. -->
     <xsd:complexType name="controlType">
         <xsd:complexContent>
             <xsd:extension base="basicControlType">
-                <xsd:sequence >
+                <xsd:sequence>
                     <xsd:choice maxOccurs="unbounded">
-                        <xsd:element ref="include"/>
-                     </xsd:choice>
-                </xsd:sequence>       
+                        <xsd:element ref="include" />
+                    </xsd:choice>
+                </xsd:sequence>
             </xsd:extension>
         </xsd:complexContent>
-   </xsd:complexType>
+    </xsd:complexType>
 
     <!-- control type definitions. This section contains type definition for the control
     elements. These are primarily a composite of various element groups.
@@ -76,350 +77,438 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
     <xsd:complexType name="groupControlType">
         <xsd:complexContent>
             <xsd:extension base="controlType">
-                <xsd:sequence >
+                <xsd:sequence>
                     <xsd:choice maxOccurs="unbounded">
-                        <!-- <xsd:group ref="defaultControlTags"/> -->
-                     </xsd:choice>
-                </xsd:sequence>       
+                        <xsd:group ref="focusableControlTags"/>
+                        <xsd:element ref="control" />
+                    </xsd:choice>
+                </xsd:sequence>
             </xsd:extension>
         </xsd:complexContent>
-     </xsd:complexType>
+    </xsd:complexType>
 
     <xsd:complexType name="groupListControlType">
-        <xsd:sequence >
+        <xsd:sequence>
             <xsd:choice maxOccurs="unbounded">
-                <xsd:element name="itemgap" type="xsd:int"/>
-                <xsd:element name="orientation" type="orientationType"/>
-                <xsd:element name="usecontrolcoords" type="trueFalseType"/>
-                <xsd:element name="align" type="alignType"/>
-                <xsd:element name="defaultControl" type="zeroOrPositiveInt"/>
-             <xsd:group ref="defaultControlTags"/>
+                <xsd:element name="itemgap" type="xsd:int" />
+                <xsd:element name="orientation" type="orientationType" />
+                <xsd:element name="usecontrolcoords" type="trueFalseType" />
+                <xsd:element name="align" type="alignType" />
+                <xsd:element name="defaultControl" type="zeroOrPositiveInt" />
+                <xsd:group ref="defaultControlTags" />
             </xsd:choice>
         </xsd:sequence>
     </xsd:complexType>
 
     <xsd:complexType name="labelControlType">
-        <xsd:sequence >
+        <xsd:sequence>
             <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-                <xsd:group ref="textTags"/>
-                <xsd:group ref="scrollTags"/>
+                <xsd:group ref="defaultControlTags" />
+                <xsd:group ref="textTags" />
+                <xsd:group ref="scrollTags" />
             </xsd:choice>
         </xsd:sequence>
     </xsd:complexType>
 
     <xsd:complexType name="fadeLabelControlType">
-        <xsd:sequence >
+        <xsd:sequence>
             <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-                <xsd:group ref="textTags"/>
-                <xsd:group ref="scrollTags"/>
-                <xsd:group ref="posTags"/>
+                <xsd:group ref="defaultControlTags" />
+                <xsd:group ref="textTags" />
+                <xsd:group ref="scrollTags" />
+                <xsd:group ref="posTags" />
                 <xsd:element ref="scrollout" />
                 <xsd:element ref="pauseatend" />
-                <xsd:element ref="info"/>
-                <xsd:element ref="randomize"/>
+                <xsd:element ref="randomize" />
             </xsd:choice>
         </xsd:sequence>
     </xsd:complexType>
 
     <xsd:complexType name="imageControlType">
-        <xsd:sequence >
+        <xsd:sequence>
             <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
-
-    <xsd:complexType name="multiImageControlType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
-
-    
-    <xsd:complexType name="buttonControlType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-                <xsd:group ref="textTags"/>
-                <xsd:group ref="focusableControlTags"/>
-                <xsd:group ref="posTags"/>
-                <xsd:group ref="textureFocusTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
-
-    <xsd:complexType name="radioButtonControlType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
-
-    <xsd:complexType name="toggleButtonControlType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
-
-    <xsd:complexType name="spinControlType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
- 
-    <xsd:complexType name="settingsSpinControlType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
- 
-    <xsd:complexType name="sliderControlType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
- 
-    <xsd:complexType name="scrollBarControlType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
- 
-    <xsd:complexType name="settingsSliderControlType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
- 
-    <xsd:complexType name="progressControlType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
-
-    <xsd:complexType name="listContainerType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
-
-    <xsd:complexType name="wrapListContainerType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
-
-    <xsd:complexType name="fixedListContainerType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
-
-    <xsd:complexType name="panelType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
-
-    <xsd:complexType name="textBoxType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
-
-    <xsd:complexType name="rssTickerType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
-
-    <xsd:complexType name="visualizationControlType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
-
-    <xsd:complexType name="videoControlType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
-        </xsd:sequence>
-    </xsd:complexType>
-   
-
-    <xsd:complexType name="editControlType">
-        <xsd:sequence >
-            <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-                <xsd:group ref="textTags"/>
-                <xsd:group ref="scrollTags"/>
-                <xsd:group ref="posTags"/>
-                <xsd:group ref="textureFocusTags"/>
-                <xsd:element ref="hinttext"/>
-                <xsd:element ref="haspath"/>
-                <xsd:element ref="pulseonselect"/>
+                <xsd:group ref="defaultControlTags" />
+                <xsd:group ref="imageControlTags" />
+                <xsd:group ref="infoTags" />
+                <xsd:group ref="fadeTags" />
             </xsd:choice>
         </xsd:sequence>
     </xsd:complexType>
 
-    
+
+    <xsd:group name="imageControlTags">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:element ref="texture" />
+                <xsd:element ref="bordertexture" />
+                <xsd:element ref="bordersize" />
+                <xsd:element ref="fadetime" />
+                <xsd:element ref="background" />
+
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:group>
+    <xsd:group name="fadeTags">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:element ref="aspectratio" />
+                <xsd:element ref="fadetime" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:group>
+
+
+    <xsd:complexType name="multiImageControlType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+                <xsd:group ref="infoTags" />
+                <xsd:group ref="fadeTags" />
+                <xsd:group ref="multiImageControlTags" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:group name="multiImageControlTags">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:element ref="fadetime" />
+                <xsd:element ref="loop" />
+                <xsd:element ref="timeperimage" />
+                <xsd:element ref="imagepath" />
+
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:group>
+
+
+    <xsd:complexType name="buttonControlType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+                <xsd:group ref="textTags" />
+                <xsd:group ref="focusableControlTags" />
+                <xsd:group ref="posTags" />
+                <xsd:group ref="textureFocusTags" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="radioButtonControlType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+                <xsd:group ref="textTags" />
+                <xsd:group ref="focusableControlTags" />
+                <xsd:group ref="posTags" />
+                <xsd:group ref="textureFocusTags" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:group name="radioButtonControlTags">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:element ref="textureradioonfocus" />
+                <xsd:element ref="textureradioonnofocus" />
+                <xsd:element ref="textureradioofffocus" />
+                <xsd:element ref="textureradiooffnofocus" />
+
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:group>
+
+
+    <xsd:complexType name="toggleButtonControlType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+                <xsd:group ref="textureFocusTags"/>
+                <xsd:group ref="focusableControlTags"/>
+                <xsd:group ref="toggleButtonControTags"/>
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:group name="toggleButtonControTags">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:element ref="alttexturefocus" />
+                <xsd:element ref="alttexturenofocus" />
+                <xsd:element ref="usealttexture" />
+                <xsd:element ref="altlabel" />
+
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:group>
+
+    <xsd:complexType name="spinControlType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="settingsSpinControlType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="sliderControlType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="scrollBarControlType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="settingsSliderControlType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="progressControlType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="listContainerType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="wrapListContainerType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="fixedListContainerType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="panelType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="textBoxType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="rssTickerType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="visualizationControlType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="videoControlType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="editControlType">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:group ref="defaultControlTags" />
+                <xsd:group ref="textTags" />
+                <xsd:group ref="scrollTags" />
+                <xsd:group ref="posTags" />
+                <xsd:group ref="textureFocusTags" />
+                <xsd:element ref="hinttext" />
+                <xsd:element ref="haspath" />
+                <xsd:element ref="pulseonselect" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
     <xsd:complexType name="EPGRGridControlType">
-        <xsd:sequence >
+        <xsd:sequence>
             <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
+                <xsd:group ref="defaultControlTags" />
+            </xsd:choice>
         </xsd:sequence>
     </xsd:complexType>
-   
+
     <xsd:complexType name="moverControlType">
-        <xsd:sequence >
+        <xsd:sequence>
             <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
+                <xsd:group ref="defaultControlTags" />
+            </xsd:choice>
         </xsd:sequence>
     </xsd:complexType>
-  
+
     <xsd:complexType name="resizeControlType">
-        <xsd:sequence >
+        <xsd:sequence>
             <xsd:choice maxOccurs="unbounded">
-                <xsd:group ref="defaultControlTags"/>
-             </xsd:choice>
+                <xsd:group ref="defaultControlTags" />
+            </xsd:choice>
         </xsd:sequence>
     </xsd:complexType>
 
 
     <!--  elements that can be used for unit testng of the 
     control types -->
-    <xsd:element  name="buttonControlTest" type="buttonControlType"/>
-    <xsd:element  name="labelControlTest" type="labelControlType"/>
-    <xsd:element  name="fadeLabelControlTest" type="fadeLabelControlType"/>
-    <xsd:element  name="editControlTest" type="editControlType"/>
+    <xsd:element name="buttonControlTest" type="buttonControlType" />
+    <xsd:element name="labelControlTest" type="labelControlType" />
+    <xsd:element name="fadeLabelControlTest" type="fadeLabelControlType" />
+    <xsd:element name="editControlTest" type="editControlType" />
+    <xsd:element name="groupControlTest"/>
+
 
     <!-- elements that are used to compose the various types -->
     <xsd:element name="window" type="windowType" vc:minVersion="1.0" vc:maxVersion="1.0" />
-    <xsd:element name="view" type="zeroOrPositiveInt"/>
-    <xsd:element name="hinttext" type="xsd:string"/>
-    <xsd:element name="pauseatend" type="zeroOrPositiveInt"/>
-    <xsd:element name="randomize" type="trueFalseType"/>
-    <xsd:element name="scrollout" type="trueFalseType"/>
-    <xsd:element name="info" type="xsd:string"/>
-    <xsd:element name="number" type="xsd:integer"/>
+    <xsd:element name="view" type="zeroOrPositiveInt" />
+    <xsd:element name="hinttext" type="xsd:string" />
+    <xsd:element name="pauseatend" type="zeroOrPositiveInt" />
+    <xsd:element name="randomize" type="trueFalseType" />
+    <xsd:element name="scrollout" type="trueFalseType" />
+    <xsd:element name="info" type="xsd:string" />
+    <xsd:element name="number" type="xsd:integer" />
     <xsd:element name="control" type="controlType" />
-    <xsd:element name="controls" type="controlsType"/>
-    <xsd:element name="description" type="xsd:string"/>
-    <xsd:element name="id" type="idType"/>
-    <xsd:element name="left" type="windowCoord"/>
-    <xsd:element name="top" type="windowCoord"/>
-    <xsd:element name="right" type="windowCoord"/>
-    <xsd:element name="bottom" type="windowCoord"/>
-    <xsd:element name="width" type="windowDimension"/>
-    <xsd:element name="height" type="windowDimension"/>
-    <xsd:element name="movement" type="windowDimension"/>
-    <xsd:element name="centerleft" type="centeringType"/>
-    <xsd:element name="centerright" type="centeringType"/>
-    <xsd:element name="centertop" type="centeringType"/>
-    <xsd:element name="centerbottom" type="centeringType"/>
-    <xsd:element name="camera" type="xsd:string"/>
-    <xsd:element name="depth" type="xsd:string"/>
-    <xsd:element name="posx" type="xsd:int"/>
-    <xsd:element name="posy" type="xsd:int"/>
-    <xsd:element name="textoffsetx" type="xsd:int"/>
-    <xsd:element name="textoffsety" type="xsd:int"/>
-    <xsd:element name="haspath" type="trueFalseType"/>
+    <xsd:element name="controls" type="controlsType" />
+    <xsd:element name="description" type="xsd:string" />
+    <xsd:element name="id" type="idType" />
+    <xsd:element name="left" type="windowCoord" />
+    <xsd:element name="top" type="windowCoord" />
+    <xsd:element name="right" type="windowCoord" />
+    <xsd:element name="bottom" type="windowCoord" />
+    <xsd:element name="width" type="windowDimension" />
+    <xsd:element name="height" type="windowDimension" />
+    <xsd:element name="movement" type="windowDimension" />
+    <xsd:element name="centerleft" type="centeringType" />
+    <xsd:element name="centerright" type="centeringType" />
+    <xsd:element name="centertop" type="centeringType" />
+    <xsd:element name="centerbottom" type="centeringType" />
+    <xsd:element name="camera" type="xsd:string" />
+    <xsd:element name="depth" type="xsd:string" />
+    <xsd:element name="posx" type="xsd:int" />
+    <xsd:element name="posy" type="xsd:int" />
+    <xsd:element name="textoffsetx" type="xsd:int" />
+    <xsd:element name="textoffsety" type="xsd:int" />
+    <xsd:element name="haspath" type="trueFalseType" />
 
-    <xsd:element name="colordiffuse" type="colorType"/>
-    <xsd:element name="pulseonselect" type="trueFalseType"/>
+    <xsd:element name="colordiffuse" type="colorType" />
+    <xsd:element name="pulseonselect" type="trueFalseType" />
 
-    <xsd:element name="showonepage" type="trueFalseType"/>
-    <xsd:element name="orientation" type="orientationType"/>
+    <xsd:element name="showonepage" type="trueFalseType" />
+    <xsd:element name="orientation" type="orientationType" />
 
-    <xsd:element name="onup" type="idRefType"/>
-    <xsd:element name="ondown" type="idRefType"/>
-    <xsd:element name="onleft" type="idRefType"/>
-    <xsd:element name="onright" type="idRefType"/>
-    <xsd:element name="onback" type="idRefType"/>
-    <xsd:element name="oninfo" type="idRefType"/>
+    <xsd:element name="onup" type="idRefType" />
+    <xsd:element name="ondown" type="idRefType" />
+    <xsd:element name="onleft" type="idRefType" />
+    <xsd:element name="onright" type="idRefType" />
+    <xsd:element name="onback" type="idRefType" />
+    <xsd:element name="oninfo" type="idRefType" />
 
-    <xsd:element name="itemgap" type="xsd:int"/>
-    <xsd:element name="usecontrolcoords" type="trueFalseType"/>
-    <xsd:element name="defaultcontrol" type="idRefType"/>
+    <xsd:element name="itemgap" type="xsd:int" />
+    <xsd:element name="usecontrolcoords" type="trueFalseType" />
+    <xsd:element name="defaultcontrol" type="idRefType" />
 
-    <xsd:element name="texturefocus" type="textureFocusType"/>
-    <xsd:element name="texturenofocus" type="textureFocusType"/>
+    <xsd:element name="texturefocus" type="textureFocusType" />
+    <xsd:element name="texturenofocus" type="textureFocusType" />
 
-    <xsd:element name="label" type="xsd:string"/>
-    <xsd:element name="font" type="fontType"/>
-    <xsd:element name="align" type="alignType"/>
-    <xsd:element name="aligny" type="alignType"/>
-    <xsd:element name="textcolor" type="colorType"/>
-    <xsd:element name="focusedcolor" type="colorType"/>
-    <xsd:element name="disabledcolor" type="colorType"/>
-    <xsd:element name="invalidcolor" type="colorType"/>
-    <xsd:element name="backgroundcolor" type="colorType"/>
-    <xsd:element name="shadowcolor" type="colorType"/>
-    <xsd:element name="titlecolor" type="colorType"/>
-    <xsd:element name="headlinecolor" type="colorType"/>
-    <xsd:element name="hitrectcolor" type="colorType"/>
-    <xsd:element name="wrapmultiline" type="trueFalseType"/>
-    <xsd:element name="onfocus" type="actionType"/>
-    <xsd:element name="onunfocus" type="actionType"/>
+    <xsd:element name="label" type="xsd:string" />
+    <xsd:element name="font" type="fontType" />
+    <xsd:element name="align" type="alignType" />
+    <xsd:element name="aligny" type="alignType" />
+    <xsd:element name="textcolor" type="colorType" />
+    <xsd:element name="focusedcolor" type="colorType" />
+    <xsd:element name="disabledcolor" type="colorType" />
+    <xsd:element name="invalidcolor" type="colorType" />
+    <xsd:element name="backgroundcolor" type="colorType" />
+    <xsd:element name="shadowcolor" type="colorType" />
+    <xsd:element name="titlecolor" type="colorType" />
+    <xsd:element name="headlinecolor" type="colorType" />
+    <xsd:element name="hitrectcolor" type="colorType" />
+    <xsd:element name="wrapmultiline" type="trueFalseType" />
+    <xsd:element name="onfocus" type="actionType" />
+    <xsd:element name="onunfocus" type="actionType" />
 
-    <xsd:element name="scrolltime" type="scrolltimeType"/>
-    <xsd:element name="pagecontrol" type="idRefType"/>
-    <xsd:element name="aspectratio" type="aspectRatioType"/>
-    <xsd:element name="fadetime" type="millisVariableType"/>
-    <xsd:element name="preloaditems" type="zeroOrPositiveInt"/>
-    <xsd:element name="thumb" type="imageLocationType"/>
-    <xsd:element name="angle" type="kdt:angleBase"/>
-    <xsd:element name="textwidth" type="kdt:textwidthBase"/>
-    <xsd:element name="hitrect" type="hitrectType"/>
-    <xsd:element name="scroll" type="trueFalseType"/>
-    <xsd:element name="scrollspeed" type="zeroOrPositiveInt"/>
-    <xsd:element name="scrollsuffix" type="xsd:string"/>
+    <xsd:element name="scrolltime" type="scrolltimeType" />
+    <xsd:element name="pagecontrol" type="idRefType" />
+    <xsd:element name="aspectratio" type="aspectRatioType" />
+    <xsd:element name="fadetime" type="millisVariableType" />
+    <xsd:element name="preloaditems" type="zeroOrPositiveInt" />
+    <xsd:element name="thumb" type="imageLocationType" />
+    <xsd:element name="angle" type="kdt:angleBase" />
+    <xsd:element name="textwidth" type="kdt:textwidthBase" />
+    <xsd:element name="hitrect" type="hitrectType" />
+    <xsd:element name="scroll" type="trueFalseType" />
+    <xsd:element name="scrollspeed" type="zeroOrPositiveInt" />
+    <xsd:element name="scrollsuffix" type="xsd:string" />
+    <xsd:element name="bordersize" type="zeroOrPositiveInt" />
+    <xsd:element name="background" type="trueFalseType" />
+    <xsd:element name="loop" type="trueFalseType" />
+    <xsd:element name="timeperimage" type="millisType" />
+    <xsd:element name="textureradioonfocus" type="textureFocusType" />
+    <xsd:element name="textureradioonnofocus" type="textureFocusType" />
+    <xsd:element name="textureradioofffocus" type="textureFocusType" />
+    <xsd:element name="textureradiooffnofocus" type="textureFocusType" />
+    <xsd:element name="alttexturefocus"  type="textureFocusType"/>
+    <xsd:element name="alttexturenofocus"  type="textureFocusType"/>
+    <xsd:element name="usealttexture" type="trueFalseType"/>
+    <xsd:element name="altlabel" type="trueFalseType"/>
+
 
     <!--  skin type defintions, most rely on types common to both
     skins and addons. These are found in the kdt namespace.-->
     <xsd:complexType name="hitrectType" mixed="true">
         <xsd:simpleContent>
             <xsd:extension base="xsd:string">
-                <xsd:attribute name="x" type="xsd:int"/>
-                <xsd:attribute name="y" type="zeroOrPositiveInt"/>
-                <xsd:attribute name="w" type="zeroOrPositiveInt"/>
-                <xsd:attribute name="h" type="zeroOrPositiveInt"/>
+                <xsd:attribute name="x" type="xsd:int" />
+                <xsd:attribute name="y" type="zeroOrPositiveInt" />
+                <xsd:attribute name="w" type="zeroOrPositiveInt" />
+                <xsd:attribute name="h" type="zeroOrPositiveInt" />
             </xsd:extension>
         </xsd:simpleContent>
 
@@ -427,7 +516,7 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
 
     <xsd:simpleType name="imageLocationType">
         <xsd:restriction base="xsd:string">
-            <xsd:pattern value=".*"/>
+            <xsd:pattern value=".*" />
         </xsd:restriction>
     </xsd:simpleType>
 
@@ -435,8 +524,8 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
         <xsd:complexType mixed="true">
             <xsd:simpleContent>
                 <xsd:extension base="xsd:string">
-                    <xsd:attribute name="background" type="trueFalseType"/>
-                    <xsd:attribute name="colordiffuse" type="colorType"/>
+                    <xsd:attribute name="background" type="trueFalseType" />
+                    <xsd:attribute name="colordiffuse" type="colorType" />
                 </xsd:extension>
 
             </xsd:simpleContent>
@@ -448,8 +537,20 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
         <xsd:complexType mixed="true">
             <xsd:simpleContent>
                 <xsd:extension base="xsd:string">
-                    <xsd:attribute name="border" type="zeroOrPositiveInt"/>
-                    <xsd:attribute name="colordiffuse" type="colorType"/>
+                    <xsd:attribute name="border" type="zeroOrPositiveInt" />
+                    <xsd:attribute name="colordiffuse" type="colorType" />
+                </xsd:extension>
+
+            </xsd:simpleContent>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:element name="bordertexture">
+        <xsd:complexType mixed="true">
+            <xsd:simpleContent>
+                <xsd:extension base="xsd:string">
+                    <xsd:attribute name="border" type="zeroOrPositiveInt" />
+                    <xsd:attribute name="colordiffuse" type="colorType" />
                 </xsd:extension>
 
             </xsd:simpleContent>
@@ -457,13 +558,11 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
     </xsd:element>
 
 
-
-
-    <xsd:complexType name="windowType"  >
+    <xsd:complexType name="windowType">
         <xsd:sequence>
             <xsd:choice minOccurs="0" maxOccurs="unbounded">
-                <xsd:element  ref="view"/>
-                <xsd:element ref="controls"/>
+                <xsd:element ref="view" />
+                <xsd:element ref="controls" />
                 <xsd:element ref="control" />
                 <xsd:element ref="defaultcontrol" />
                 <xsd:element ref="backgroundcolor" />
@@ -474,7 +573,7 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
     </xsd:complexType>
 
     <xsd:complexType name="controlsType">
-        <xsd:sequence >
+        <xsd:sequence>
             <xsd:choice maxOccurs="unbounded">
                 <xsd:element ref="include" />
                 <xsd:element ref="control" />
@@ -483,99 +582,104 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
     </xsd:complexType>
 
 
-
     <!--  groups of tags that a commony found together in xbmcgui defs -->
-    
+
+
+    <xsd:group name="infoTags">
+        <xsd:sequence>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:element ref="info" />
+            </xsd:choice>
+        </xsd:sequence>
+    </xsd:group>
+
     <!--  indates a position -->
     <xsd:group name="posTags">
         <xsd:sequence>
             <xsd:choice maxOccurs="unbounded">
-                <xsd:element ref="posx"/>
-                <xsd:element ref="posy"/>
+                <xsd:element ref="posx" />
+                <xsd:element ref="posy" />
             </xsd:choice>
         </xsd:sequence>
     </xsd:group>
 
     <!--  used to define focusable control behavior -->
-    <xsd:group name="focusableControlTags" >
+    <xsd:group name="focusableControlTags">
         <xsd:sequence>
             <xsd:choice maxOccurs="unbounded">
-                <xsd:element ref="onup"/>
-                <xsd:element ref="ondown"/>
-                <xsd:element ref="onleft" maxOccurs="1"/>
-                <xsd:element ref="onright"/>
-                <xsd:element ref="onfocus"/>
-                <xsd:element ref="onunfocus"/>
-                <xsd:element ref="onback"/>
-                <xsd:element ref="oninfo"/>
-                <xsd:element ref="onclick"/>
-                <xsd:element ref="hitrect"/>
-                <xsd:element ref="hitrectcolor"/>
-                <xsd:element ref="pulseonselect"/>
-                <xsd:element ref="orientation"/>
+                <xsd:element ref="onup" />
+                <xsd:element ref="ondown" />
+                <xsd:element ref="onleft" maxOccurs="1" />
+                <xsd:element ref="onright" />
+                <xsd:element ref="onfocus" />
+                <xsd:element ref="onunfocus" />
+                <xsd:element ref="onback" />
+                <xsd:element ref="oninfo" />
+                <xsd:element ref="onclick" />
+                <xsd:element ref="hitrect" />
+                <xsd:element ref="hitrectcolor" />
+                <xsd:element ref="pulseonselect" />
+                <xsd:element ref="orientation" />
             </xsd:choice>
         </xsd:sequence>
     </xsd:group>
 
     <!--  used to specify text based on focus  -->
-    <xsd:group name="textureFocusTags" >
+    <xsd:group name="textureFocusTags">
         <xsd:sequence>
             <xsd:choice maxOccurs="unbounded">
-                <xsd:element ref="texturefocus"/>
-                <xsd:element ref="texturenofocus"/>
+                <xsd:element ref="texturefocus" />
+                <xsd:element ref="texturenofocus" />
             </xsd:choice>
         </xsd:sequence>
     </xsd:group>
-
 
 
     <!--  used to control rendering of text -->
-    <xsd:group name="textTags" >
+    <xsd:group name="textTags">
         <xsd:sequence>
             <xsd:choice maxOccurs="unbounded">
-                <xsd:element ref="angle"/>
-                <xsd:element ref="align"/>
-                <xsd:element ref="aligny" maxOccurs="1"/>
-                <xsd:element ref="wrapmultiline"/>
-                <xsd:element ref="textwidth"/>
-                <xsd:element ref="font"/>
-                <xsd:element ref="textcolor"/>
-                <xsd:element ref="label"/>
-                <xsd:element ref="focusedcolor"/>
-                <xsd:element ref="disabledcolor"/>
-                <xsd:element ref="invalidcolor"/>
-                <xsd:element ref="shadowcolor"/>
-                <xsd:element ref="titlecolor"/>
-                <xsd:element ref="textoffsetx"/>
-                <xsd:element ref="textoffsety"/>
+                <xsd:element ref="angle" />
+                <xsd:element ref="align" />
+                <xsd:element ref="aligny" maxOccurs="1" />
+                <xsd:element ref="wrapmultiline" />
+                <xsd:element ref="textwidth" />
+                <xsd:element ref="font" />
+                <xsd:element ref="textcolor" />
+                <xsd:element ref="label" />
+                <xsd:element ref="focusedcolor" />
+                <xsd:element ref="disabledcolor" />
+                <xsd:element ref="invalidcolor" />
+                <xsd:element ref="shadowcolor" />
+                <xsd:element ref="titlecolor" />
+                <xsd:element ref="textoffsetx" />
+                <xsd:element ref="textoffsety" />
             </xsd:choice>
         </xsd:sequence>
     </xsd:group>
-    
-    <xsd:group name="miscControlTags" >
+
+
+    <xsd:group name="miscControlTags">
         <xsd:sequence>
-            <xsd:choice  maxOccurs="unbounded">
+            <xsd:choice maxOccurs="unbounded">
 
-                <xsd:element ref="showonepage"/>
+                <xsd:element ref="showonepage" />
 
 
-                <xsd:element ref="itemgap"/>
-                <xsd:element ref="usecontrolcoords"/>
-                <xsd:element ref="defaultcontrol"/>
-                <xsd:element ref="pagecontrol"/>
+                <xsd:element ref="itemgap" />
+                <xsd:element ref="usecontrolcoords" />
+                <xsd:element ref="defaultcontrol" />
+                <xsd:element ref="pagecontrol" />
 
-                <xsd:element ref="headlinecolor"/>
+                <xsd:element ref="headlinecolor" />
 
-                 <xsd:element ref="fadetime"/>
-                <xsd:element ref="aspectratio"/>
-                <xsd:element ref="imagepath"/>
-                <xsd:element ref="preloaditems"/>
-                <xsd:element ref="itemlayout"/>
-                <xsd:element ref="focusedlayout"/>
-                <xsd:element ref="content"/>
-                <xsd:element ref="texture"/>
-                <xsd:element ref="focusposition"/>
-                <xsd:element ref="urlset"/>
+                <xsd:element ref="imagepath" />
+                <xsd:element ref="preloaditems" />
+                <xsd:element ref="itemlayout" />
+                <xsd:element ref="focusedlayout" />
+                <xsd:element ref="content" />
+                <xsd:element ref="focusposition" />
+                <xsd:element ref="urlset" />
 
             </xsd:choice>
         </xsd:sequence>
@@ -583,39 +687,39 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
 
     <xsd:group name="scrollTags">
         <xsd:sequence>
-            <xsd:choice   maxOccurs="unbounded">
-                <xsd:element ref="scroll"/>
-                <xsd:element ref="scrolltime"/>
-                <xsd:element ref="scrollspeed"/>
-                <xsd:element ref="scrollsuffix"/>
+            <xsd:choice maxOccurs="unbounded">
+                <xsd:element ref="scroll" />
+                <xsd:element ref="scrolltime" />
+                <xsd:element ref="scrollspeed" />
+                <xsd:element ref="scrollsuffix" />
             </xsd:choice>
         </xsd:sequence>
     </xsd:group>
 
-    <xsd:group name="defaultControlTags" >
-        <xsd:sequence>
-            <xsd:choice   maxOccurs="unbounded">
+    <xsd:group name="defaultControlTags">
+        <xsd:sequence >
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
                 <!--  tags available to all controls  -->
                 <xsd:element ref="include" />
 
-                <xsd:element ref="description"/>
+                <xsd:element ref="description" />
                 <xsd:element ref="id" />
                 <xsd:element ref="left" />
-                <xsd:element ref="top"/>
-                <xsd:element ref="right"/>
-                <xsd:element ref="bottom"/>
+                <xsd:element ref="top" />
+                <xsd:element ref="right" />
+                <xsd:element ref="bottom" />
 
-                <xsd:element ref="centerleft"/>
-                <xsd:element ref="centerright"/>
-                <xsd:element ref="centertop"/>
-                <xsd:element ref="centerbottom"/>
-                <xsd:element ref="width"/>
-                <xsd:element ref="height"/>
-                <xsd:element ref="visible"/>
-                <xsd:element ref="animation"/>
-                <xsd:element ref="camera"/>
-                <xsd:element ref="depth"/>
-                <xsd:element ref="colordiffuse"/>
+                <xsd:element ref="centerleft" />
+                <xsd:element ref="centerright" />
+                <xsd:element ref="centertop" />
+                <xsd:element ref="centerbottom" />
+                <xsd:element ref="width" />
+                <xsd:element ref="height" />
+                <xsd:element ref="visible" />
+                <xsd:element ref="animation" />
+                <xsd:element ref="camera" />
+                <xsd:element ref="depth" />
+                <xsd:element ref="colordiffuse" />
 
 
             </xsd:choice>
@@ -625,29 +729,29 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
     <xsd:attributeGroup name="animationAttrs">
         <xsd:attribute name="effect" type="effectTypeType" />
         <xsd:attribute name="time" type="xsd:nonNegativeInteger" />
-        <xsd:attribute name="delay" type="xsd:nonNegativeInteger"/>
-        <xsd:attribute name="start" type="animationEffectStateType"/>
-        <xsd:attribute name="end" type="animationEffectStateType"/>
-        <xsd:attribute name="acceleration" type="accelerationType"/>
-        <xsd:attribute name="center" type="animationEffectCenterType"/>
-        <xsd:attribute name="condition" type="conditionType"/>
-        <xsd:attribute name="reversible" type="trueFalseType"/>
-        <xsd:attribute name="loop" type="trueFalseType"/>
-        <xsd:attribute name="pulse" type="trueFalseType"/>
-        <xsd:attribute name="tween" type="tweenType"/>
-        <xsd:attribute name="easing" type="easingType"/>
+        <xsd:attribute name="delay" type="xsd:nonNegativeInteger" />
+        <xsd:attribute name="start" type="animationEffectStateType" />
+        <xsd:attribute name="end" type="animationEffectStateType" />
+        <xsd:attribute name="acceleration" type="accelerationType" />
+        <xsd:attribute name="center" type="animationEffectCenterType" />
+        <xsd:attribute name="condition" type="conditionType" />
+        <xsd:attribute name="reversible" type="trueFalseType" />
+        <xsd:attribute name="loop" type="trueFalseType" />
+        <xsd:attribute name="pulse" type="trueFalseType" />
+        <xsd:attribute name="tween" type="tweenType" />
+        <xsd:attribute name="easing" type="easingType" />
     </xsd:attributeGroup>
 
     <xsd:complexType name="layoutType">
         <xsd:sequence maxOccurs="unbounded">
-            <xsd:element ref="control"/>
+            <xsd:element ref="control" />
         </xsd:sequence>
-        <xsd:attribute name="width" type="centeringType"/>
-        <xsd:attribute name="height" type="centeringType"/>
+        <xsd:attribute name="width" type="centeringType" />
+        <xsd:attribute name="height" type="centeringType" />
     </xsd:complexType>
 
-    <xsd:element name="itemlayout" type="layoutType"/>
-    <xsd:element name="focusedlayout" type="layoutType"/>
+    <xsd:element name="itemlayout" type="layoutType" />
+    <xsd:element name="focusedlayout" type="layoutType" />
 
     <!--    <xsd:element  name="content">
         <xsd:simpleType>
@@ -655,26 +759,26 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
         </xsd:simpleType>
     </xsd:element>
 -->
-    <xsd:element  name="content">
+    <xsd:element name="content">
         <xsd:complexType mixed="true">
             <xsd:sequence minOccurs="0" maxOccurs="unbounded">
-                <xsd:element ref="item"/>
+                <xsd:element ref="item" />
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
 
-    <xsd:element  name="urlset" type="zeroOrPositiveInt"/>
+    <xsd:element name="urlset" type="zeroOrPositiveInt" />
 
 
-    <xsd:element  name="item">
+    <xsd:element name="item">
         <xsd:complexType mixed="true">
-            <xsd:sequence  maxOccurs="unbounded">
+            <xsd:sequence maxOccurs="unbounded">
                 <xsd:choice>
-                    <xsd:element ref="label"/>
-                    <xsd:element ref="onclick"/>
-                    <xsd:element ref="property"/>
-                    <xsd:element ref="thumb"/>
-                    <xsd:element ref="visible"/>
+                    <xsd:element ref="label" />
+                    <xsd:element ref="onclick" />
+                    <xsd:element ref="property" />
+                    <xsd:element ref="thumb" />
+                    <xsd:element ref="visible" />
                 </xsd:choice>
             </xsd:sequence>
         </xsd:complexType>
@@ -684,8 +788,8 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
         <xsd:complexType mixed="true">
             <xsd:simpleContent>
                 <xsd:extension base="xsd:string">
-                    <xsd:attribute name="name" type="xsd:string"/>
-                    <xsd:attribute name="condition" type="conditionType"/>
+                    <xsd:attribute name="name" type="xsd:string" />
+                    <xsd:attribute name="condition" type="conditionType" />
                 </xsd:extension>
             </xsd:simpleContent>
         </xsd:complexType>
@@ -695,59 +799,59 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
         <xsd:complexType mixed="true">
             <xsd:simpleContent>
                 <xsd:extension base="xsd:string">
-                    <xsd:attribute name="name" type="xsd:string"/>
+                    <xsd:attribute name="name" type="xsd:string" />
                 </xsd:extension>
             </xsd:simpleContent>
         </xsd:complexType>
     </xsd:element>
 
-    <xsd:element name="focusposition" type="zeroOrPositiveInt"/>
+    <xsd:element name="focusposition" type="zeroOrPositiveInt" />
 
     <!--  in XSD 1.1 this should alternate based on the presence of the type
      attribute -->
     <xsd:complexType name="compoundAnimation">
         <xsd:sequence>
-            <xsd:element ref="effect" maxOccurs="unbounded"/>
+            <xsd:element ref="effect" maxOccurs="unbounded" />
 
         </xsd:sequence>
-        <xsd:attribute name="type" type="animationTypeType"/>
-        <xsd:attribute ref="condition"/>
-        <xsd:attribute ref="reversible"/>
+        <xsd:attribute name="type" type="animationTypeType" />
+        <xsd:attribute ref="condition" />
+        <xsd:attribute ref="reversible" />
     </xsd:complexType>
 
     <xsd:simpleType name="aspectRatioType">
         <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="scale"/>
-            <xsd:enumeration value="keep"/>
+            <xsd:enumeration value="scale" />
+            <xsd:enumeration value="keep" />
         </xsd:restriction>
     </xsd:simpleType>
 
     <xsd:simpleType name="millisType">
         <xsd:restriction base="xsd:int">
-            <xsd:minInclusive value="0"/>
+            <xsd:minInclusive value="0" />
         </xsd:restriction>
     </xsd:simpleType>
 
     <xsd:simpleType name="millisVariableType">
-        <xsd:union memberTypes="millisType variableType"/>
+        <xsd:union memberTypes="millisType variableType" />
     </xsd:simpleType>
 
 
     <xsd:complexType name="simpleAnimation">
         <xsd:simpleContent>
             <xsd:extension base="animationTypeType">
-                <xsd:attributeGroup ref="animationAttrs"/>
+                <xsd:attributeGroup ref="animationAttrs" />
             </xsd:extension>
         </xsd:simpleContent>
     </xsd:complexType>
 
 
-    <xsd:element name="effect" >
+    <xsd:element name="effect">
         <xsd:complexType>
             <xsd:simpleContent>
                 <xsd:extension base="xsd:string">
-                    <xsd:attribute name="type" type="effectTypeType"/>
-                    <xsd:attributeGroup ref="animationAttrs"/>
+                    <xsd:attribute name="type" type="effectTypeType" />
+                    <xsd:attributeGroup ref="animationAttrs" />
                 </xsd:extension>
             </xsd:simpleContent>
         </xsd:complexType>
@@ -758,7 +862,7 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
         <xsd:complexType>
             <xsd:simpleContent>
                 <xsd:extension base="trueFalseConditionType">
-                    <xsd:attribute name="allowhiddenfocus" type="trueFalseType"/>
+                    <xsd:attribute name="allowhiddenfocus" type="trueFalseType" />
                 </xsd:extension>
             </xsd:simpleContent>
         </xsd:complexType>
@@ -766,13 +870,13 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
 
 
     <xsd:element name="animation">
-        <xsd:complexType mixed="true" >
-            <xsd:sequence >
-                <xsd:element ref="effect" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:complexType mixed="true">
+            <xsd:sequence>
+                <xsd:element ref="effect" minOccurs="0" maxOccurs="unbounded" />
             </xsd:sequence>
-            <xsd:attribute name="type" type="animationTypeType"/>
+            <xsd:attribute name="type" type="animationTypeType" />
 
-            <xsd:attributeGroup ref="animationAttrs"/>
+            <xsd:attributeGroup ref="animationAttrs" />
         </xsd:complexType>
 
     </xsd:element>
@@ -787,96 +891,92 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
         <xsd:complexType>
             <xsd:simpleContent>
                 <xsd:extension base="effectTypeType">
-                    <xsd:attributeGroup ref="animationAttrs"/>
+                    <xsd:attributeGroup ref="animationAttrs" />
                 </xsd:extension>
             </xsd:simpleContent>
         </xsd:complexType>
     </xsd:element>
 
 
-
-    <xsd:complexType name="anythingType" >
+    <xsd:complexType name="anythingType">
         <xsd:sequence>
-            <xsd:any minOccurs="0" maxOccurs="unbounded" namespace="##any" processContents="lax"/>
+            <xsd:any minOccurs="0" maxOccurs="unbounded" namespace="##any" processContents="lax" />
         </xsd:sequence>
         <xsd:anyAttribute namespace="##any" processContents="lax" />
     </xsd:complexType>
 
 
-
-
-
     <xsd:simpleType name="depthType">
         <xsd:restriction base="xsd:float">
-            <xsd:minInclusive value="-1.0"/>
-            <xsd:maxExclusive value="1.0"/>
+            <xsd:minInclusive value="-1.0" />
+            <xsd:maxExclusive value="1.0" />
         </xsd:restriction>
 
     </xsd:simpleType>
 
-    <xsd:simpleType name="controlTypeEnum" >
+    <xsd:simpleType name="controlTypeEnum">
         <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="group"/>
-            <xsd:enumeration value="grouplist"/>
-            <xsd:enumeration value="button"/>
-            <xsd:enumeration value="scrollbar"/>
-            <xsd:enumeration value="panel"/>
-            <xsd:enumeration value="multiimage"/>
-            <xsd:enumeration value="image"/>
-            <xsd:enumeration value="label"/>
-            <xsd:enumeration value="fixedlist"/>
-            <xsd:enumeration value="rss"/>
+            <xsd:enumeration value="group" />
+            <xsd:enumeration value="grouplist" />
+            <xsd:enumeration value="button" />
+            <xsd:enumeration value="scrollbar" />
+            <xsd:enumeration value="panel" />
+            <xsd:enumeration value="multiimage" />
+            <xsd:enumeration value="image" />
+            <xsd:enumeration value="label" />
+            <xsd:enumeration value="fixedlist" />
+            <xsd:enumeration value="rss" />
         </xsd:restriction>
     </xsd:simpleType>
 
-    <xsd:simpleType name="alignType" >
+    <xsd:simpleType name="alignType">
         <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="left"/>
-            <xsd:enumeration value="right"/>
-            <xsd:enumeration value="center"/>
-            <xsd:enumeration value="justify"/>
+            <xsd:enumeration value="left" />
+            <xsd:enumeration value="right" />
+            <xsd:enumeration value="center" />
+            <xsd:enumeration value="justify" />
         </xsd:restriction>
     </xsd:simpleType>
-    <xsd:simpleType name="orientationType" >
+    <xsd:simpleType name="orientationType">
         <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="horizontal"/>
-            <xsd:enumeration value="vertical"/>
+            <xsd:enumeration value="horizontal" />
+            <xsd:enumeration value="vertical" />
         </xsd:restriction>
     </xsd:simpleType>
 
-    <xsd:simpleType name="colorNameType" >
+    <xsd:simpleType name="colorNameType">
         <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="red"/>
-            <xsd:enumeration value="blue"/>
-            <xsd:enumeration value="green"/>
-            <xsd:enumeration value="black"/>
-            <xsd:enumeration value="white"/>
+            <xsd:enumeration value="red" />
+            <xsd:enumeration value="blue" />
+            <xsd:enumeration value="green" />
+            <xsd:enumeration value="black" />
+            <xsd:enumeration value="white" />
         </xsd:restriction>
     </xsd:simpleType>
 
     <xsd:simpleType name="hexColorType">
         <xsd:restriction base="xsd:string">
-            <xsd:pattern value="[0-9a-fA-F]{8}"/>
+            <xsd:pattern value="[0-9a-fA-F]{8}" />
         </xsd:restriction>
     </xsd:simpleType>
 
     <xsd:simpleType name="colorType">
-        <xsd:union memberTypes="hexColorType colorNameType variableType"/>
+        <xsd:union memberTypes="hexColorType colorNameType variableType" />
     </xsd:simpleType>
 
     <xsd:simpleType name="variableType">
         <xsd:restriction base="xsd:string">
-            <xsd:pattern value="[_a-zA-Z0-9]+"/>
+            <xsd:pattern value="[_a-zA-Z0-9]+" />
         </xsd:restriction>
     </xsd:simpleType>
 
     <xsd:simpleType name="fontType">
-        <xsd:restriction base="xsd:Name"/>
+        <xsd:restriction base="xsd:Name" />
     </xsd:simpleType>
 
     <xsd:simpleType name="zeroOrPositiveInt">
         <xsd:restriction base="xsd:integer">
-            <xsd:minInclusive value="0"/>
+            <xsd:minInclusive value="0" />
         </xsd:restriction>
     </xsd:simpleType>
 
@@ -887,30 +987,30 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
     </xsd:simpleType>
 
     <xsd:simpleType name="centeringType">
-        <xsd:union memberTypes="percentageType xsd:int"/>
+        <xsd:union memberTypes="percentageType xsd:int" />
     </xsd:simpleType>
 
     <xsd:simpleType name="empty">
         <xsd:restriction base="xsd:string">
-            <xsd:maxLength value="0"/>
+            <xsd:maxLength value="0" />
         </xsd:restriction>
     </xsd:simpleType>
 
     <xsd:simpleType name="idType">
-        <xsd:restriction base="xsd:nonNegativeInteger"/>
+        <xsd:restriction base="xsd:nonNegativeInteger" />
     </xsd:simpleType>
 
 
     <xsd:simpleType name="builtinFunctionCall">
         <xsd:restriction base="xsd:string">
-            <xsd:pattern value="[A-Z][A-Za-z](.*)"/>
+            <xsd:pattern value="[A-Z][A-Za-z](.*)" />
         </xsd:restriction>
     </xsd:simpleType>
 
     <!--  idrefs should not be empty, cleaner to just omit the element. empty
     is allowed here to be forgiving with the sample xml provided by Kodi -->
     <xsd:simpleType name="idRefType">
-        <xsd:union  memberTypes="idType builtinFunctionCall empty"/>
+        <xsd:union memberTypes="idType builtinFunctionCall empty" />
     </xsd:simpleType>
 
     <xsd:simpleType name="trueFalseType">
@@ -919,124 +1019,124 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
     </xsd:simpleType>
 
     <xsd:simpleType name="trueFalseConditionType">
-        <xsd:union memberTypes="trueFalseType conditionType"/>
+        <xsd:union memberTypes="trueFalseType conditionType" />
     </xsd:simpleType>
 
-    <xsd:simpleType name="viewsType" >
-        <xsd:restriction base="zeroOrPositiveInt"/>
+    <xsd:simpleType name="viewsType">
+        <xsd:restriction base="zeroOrPositiveInt" />
     </xsd:simpleType>
 
-    <xsd:simpleType name="viewType" >
-        <xsd:restriction base="zeroOrPositiveInt"/>
+    <xsd:simpleType name="viewType">
+        <xsd:restriction base="zeroOrPositiveInt" />
     </xsd:simpleType>
 
-    <xsd:simpleType name="pulseType" >
-        <xsd:restriction base="zeroOrPositiveInt"/>
+    <xsd:simpleType name="pulseType">
+        <xsd:restriction base="zeroOrPositiveInt" />
     </xsd:simpleType>
 
     <xsd:simpleType name="windowDimension">
-        <xsd:restriction base="centeringType"/>
+        <xsd:restriction base="centeringType" />
     </xsd:simpleType>
 
     <xsd:simpleType name="windowCoord">
-        <xsd:restriction base="centeringType"/>
+        <xsd:restriction base="centeringType" />
     </xsd:simpleType>
 
 
     <xsd:simpleType name="imageFilenameType">
         <xsd:restriction base="xsd:string">
-            <xsd:pattern value=".+\.(png|jpg|bmp)"/>
+            <xsd:pattern value=".+\.(png|jpg|bmp)" />
         </xsd:restriction>
     </xsd:simpleType>
 
 
     <xsd:complexType name="textureFocusType">
-        <xsd:simpleContent >
+        <xsd:simpleContent>
             <xsd:extension base="imageFilenameType">
-                <xsd:attribute name="colordiffuse" type="colorType"/>
+                <xsd:attribute name="colordiffuse" type="colorType" />
             </xsd:extension>
         </xsd:simpleContent>
     </xsd:complexType>
 
     <xsd:simpleType name="tweenType">
         <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="linear"/>
-            <xsd:enumeration value="quadratic"/>
-            <xsd:enumeration value="bounce"/>
-            <xsd:enumeration value="elastic"/>
-            <xsd:enumeration value="cubic"/>
-            <xsd:enumeration value="circle"/>
-            <xsd:enumeration value="sine"/>
-            <xsd:enumeration value="back"/>
+            <xsd:enumeration value="linear" />
+            <xsd:enumeration value="quadratic" />
+            <xsd:enumeration value="bounce" />
+            <xsd:enumeration value="elastic" />
+            <xsd:enumeration value="cubic" />
+            <xsd:enumeration value="circle" />
+            <xsd:enumeration value="sine" />
+            <xsd:enumeration value="back" />
         </xsd:restriction>
     </xsd:simpleType>
     <xsd:simpleType name="easingType">
         <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="in"/>
-            <xsd:enumeration value="out"/>
-            <xsd:enumeration value="inout"/>
+            <xsd:enumeration value="in" />
+            <xsd:enumeration value="out" />
+            <xsd:enumeration value="inout" />
         </xsd:restriction>
     </xsd:simpleType>
 
     <xsd:complexType name="scrolltimeType">
-        <xsd:simpleContent >
+        <xsd:simpleContent>
             <xsd:extension base="zeroOrPositiveInt">
-                <xsd:attribute name="tween" type="tweenType"/>
-                <xsd:attribute name="easing" type="easingType"/>
+                <xsd:attribute name="tween" type="tweenType" />
+                <xsd:attribute name="easing" type="easingType" />
             </xsd:extension>
         </xsd:simpleContent>
     </xsd:complexType>
 
     <xsd:simpleType name="animationTypeType">
         <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="WindowOpen"/>
-            <xsd:enumeration value="WindowClose"/>
-            <xsd:enumeration value="Visible"/>
-            <xsd:enumeration value="Hidden"/>
-            <xsd:enumeration value="Focus"/>
-            <xsd:enumeration value="Unfocus"/>
-            <xsd:enumeration value="Conditional"/>
-            <xsd:enumeration value="VisibleChange"/>
+            <xsd:enumeration value="WindowOpen" />
+            <xsd:enumeration value="WindowClose" />
+            <xsd:enumeration value="Visible" />
+            <xsd:enumeration value="Hidden" />
+            <xsd:enumeration value="Focus" />
+            <xsd:enumeration value="Unfocus" />
+            <xsd:enumeration value="Conditional" />
+            <xsd:enumeration value="VisibleChange" />
         </xsd:restriction>
     </xsd:simpleType>
 
     <xsd:simpleType name="effectTypeType">
         <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="fade"/>
-            <xsd:enumeration value="fadediffuse"/>
-            <xsd:enumeration value="rotatex"/>
-            <xsd:enumeration value="rotatey"/>
-            <xsd:enumeration value="slide"/>
-            <xsd:enumeration value="zoom"/>
+            <xsd:enumeration value="fade" />
+            <xsd:enumeration value="fadediffuse" />
+            <xsd:enumeration value="rotatex" />
+            <xsd:enumeration value="rotatey" />
+            <xsd:enumeration value="slide" />
+            <xsd:enumeration value="zoom" />
         </xsd:restriction>
     </xsd:simpleType>
 
-    <xsd:attribute name="condition" type="conditionType"/>
-    <xsd:attribute name="reversible" type="trueFalseType"/>
+    <xsd:attribute name="condition" type="conditionType" />
+    <xsd:attribute name="reversible" type="trueFalseType" />
     <xsd:complexType name="effectType">
-        <xsd:attribute name="effect" type="effectTypeType"/>
-        <xsd:attribute name="time" type="xsd:nonNegativeInteger"/>
-        <xsd:attribute name="delay" type="xsd:nonNegativeInteger"/>
-        <xsd:attribute name="start" type="animationEffectStateType"/>
-        <xsd:attribute name="end" type="animationEffectStateType"/>
-        <xsd:attribute name="acceleration" type="accelerationType"/>
-        <xsd:attribute name="center" type="animationEffectCenterType"/>
+        <xsd:attribute name="effect" type="effectTypeType" />
+        <xsd:attribute name="time" type="xsd:nonNegativeInteger" />
+        <xsd:attribute name="delay" type="xsd:nonNegativeInteger" />
+        <xsd:attribute name="start" type="animationEffectStateType" />
+        <xsd:attribute name="end" type="animationEffectStateType" />
+        <xsd:attribute name="acceleration" type="accelerationType" />
+        <xsd:attribute name="center" type="animationEffectCenterType" />
         <xsd:attribute ref="condition" />
         <xsd:attribute ref="reversible" />
-        <xsd:attribute name="loop" type="trueFalseType"/>
-        <xsd:attribute name="pulse" type="trueFalseType"/>
-        <xsd:attribute name="tween" type="tweenType"/>
-        <xsd:attribute name="easing" type="easingType"/>
+        <xsd:attribute name="loop" type="trueFalseType" />
+        <xsd:attribute name="pulse" type="trueFalseType" />
+        <xsd:attribute name="tween" type="tweenType" />
+        <xsd:attribute name="easing" type="easingType" />
     </xsd:complexType>
 
     <xsd:simpleType name="conditionType">
-        <xsd:restriction base="xsd:string"/>
+        <xsd:restriction base="xsd:string" />
     </xsd:simpleType>
 
     <xsd:simpleType name="accelerationType">
         <xsd:restriction base="xsd:float">
-            <xsd:minExclusive value="-1.0"/>
-            <xsd:maxExclusive value="1.0"/>
+            <xsd:minExclusive value="-1.0" />
+            <xsd:maxExclusive value="1.0" />
         </xsd:restriction>
     </xsd:simpleType>
 
@@ -1044,12 +1144,12 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
         <xsd:union>
             <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
-                    <xsd:enumeration value="auto"/>
+                    <xsd:enumeration value="auto" />
                 </xsd:restriction>
             </xsd:simpleType>
             <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
-                    <xsd:pattern value="\d+,\d+"/>
+                    <xsd:pattern value="\d+,\d+" />
                 </xsd:restriction>
             </xsd:simpleType>
         </xsd:union>
@@ -1060,106 +1160,102 @@ targetNamespace="http://kodi.tv/xbmcgui/xsd/1.0/skin"
             <!--  for fadess -->
             <xsd:simpleType>
                 <xsd:restriction base="xsd:integer">
-                    <xsd:minExclusive value="0"/>
-                    <xsd:maxExclusive value="100"/>
+                    <xsd:minExclusive value="0" />
+                    <xsd:maxExclusive value="100" />
                 </xsd:restriction>
             </xsd:simpleType>
             <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
-                    <xsd:pattern value="\d{1,3}"/>
+                    <xsd:pattern value="\d{1,3}" />
                 </xsd:restriction>
             </xsd:simpleType>
             <!--  for diffusefadess -->
             <xsd:simpleType>
-                <xsd:restriction base="hexColorType"/>
+                <xsd:restriction base="hexColorType" />
             </xsd:simpleType>
             <!--  for slides  -->
             <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
-                    <xsd:pattern value="-?\d+,-?\d+"/>
+                    <xsd:pattern value="-?\d+,-?\d+" />
                 </xsd:restriction>
             </xsd:simpleType>
             <!--  for rotates -->
             <xsd:simpleType>
                 <xsd:restriction base="xsd:integer">
-                    <xsd:minExclusive value="0"/>
-                    <xsd:maxExclusive value="359"/>
+                    <xsd:minExclusive value="0" />
+                    <xsd:maxExclusive value="359" />
                 </xsd:restriction>
             </xsd:simpleType>
             <!--  for zooms -->
             <xsd:simpleType>
                 <xsd:restriction base="xsd:string">
-                    <xsd:pattern value="-?\d+,-?\d+(,-?\d+,-?\d+)?"/>
+                    <xsd:pattern value="-?\d+,-?\d+(,-?\d+,-?\d+)?" />
                 </xsd:restriction>
             </xsd:simpleType>
         </xsd:union>
     </xsd:simpleType>
 
     <xsd:simpleType name="actionType">
-        <xsd:restriction base="xsd:string"/>
+        <xsd:restriction base="xsd:string" />
     </xsd:simpleType>
 
     <xsd:simpleType name="varReference">
         <xsd:restriction base="xsd:string">
-            <xsd:pattern value="$VAR\[[_a-zA-Z0-9]+\]"/>
+            <xsd:pattern value="$VAR\[[_a-zA-Z0-9]+\]" />
         </xsd:restriction>
     </xsd:simpleType>
 
     <xsd:simpleType name="localizeReference">
         <xsd:restriction base="xsd:string">
-            <xsd:pattern value="\$LOCALIZE\[\d+\]"/>
+            <xsd:pattern value="\$LOCALIZE\[\d+\]" />
         </xsd:restriction>
     </xsd:simpleType>
 
     <xsd:simpleType name="infoReference">
         <xsd:restriction base="xsd:string">
-            <xsd:pattern value="$INFO\[.+\]"/>
+            <xsd:pattern value="$INFO\[.+\]" />
         </xsd:restriction>
     </xsd:simpleType>
 
     <xsd:simpleType name="compundInfoVarReference">
         <xsd:restriction base="xsd:string">
-            <xsd:pattern value=".*"/>
+            <xsd:pattern value=".*" />
         </xsd:restriction>
     </xsd:simpleType>
-
-
 
 
     <xsd:element name="includes">
         <xsd:complexType>
             <xsd:sequence>
-                <xsd:element ref="include" maxOccurs="unbounded"/>
+                <xsd:element ref="include" maxOccurs="unbounded" />
             </xsd:sequence>
         </xsd:complexType>
     </xsd:element>
 
-    <xsd:element name="include" >
+    <xsd:element name="include">
         <xsd:complexType mixed="true">
             <xsd:sequence minOccurs="0" maxOccurs="unbounded">
-                <xsd:choice >
-                    <xsd:element ref="param"/>
-                    <xsd:element ref="control"/>
+                <xsd:choice>
+                    <xsd:element ref="param" />
+                    <xsd:element ref="control" />
                 </xsd:choice>
             </xsd:sequence>
-            <xsd:attribute name="name" type="xsd:string"/>
-            <xsd:attribute name="content" type="xsd:string"/>
-            <xsd:attribute name="condition" type="xsd:string"/>
+            <xsd:attribute name="name" type="xsd:string" />
+            <xsd:attribute name="content" type="xsd:string" />
+            <xsd:attribute name="condition" type="xsd:string" />
+        </xsd:complexType>
+    </xsd:element>
+
+
+    <xsd:element name="param">
+        <xsd:complexType mixed="true">
+            <xsd:attribute name="id" type="kdt:idType" />
+            <xsd:attribute name="name" type="xsd:Name" />
+            <xsd:attribute name="value" type="xsd:string" />
+            <xsd:attribute name="default" type="xsd:string" />
         </xsd:complexType>
     </xsd:element>
 
     
-    <xsd:element  name="param">
-        <xsd:complexType mixed="true">
-            <xsd:attribute name="id" type="kdt:idType"/>
-            <xsd:attribute name="name" type="xsd:Name"/>
-            <xsd:attribute name="value" type="xsd:string"/>
-            <xsd:attribute name="default" type="xsd:string"/>
-        </xsd:complexType>
-    </xsd:element>
-
-
-
-
 
 </xsd:schema> 
